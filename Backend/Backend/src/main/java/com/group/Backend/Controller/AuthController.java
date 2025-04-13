@@ -13,6 +13,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
@@ -27,7 +29,7 @@ public class AuthController {
     private RegistrationService registrationService; // ✅ Added this
 
     @PostMapping("/login")
-    public String login(@RequestBody AuthRequest authRequest) {
+    public ResponseEntity<?> login(@RequestBody AuthRequest authRequest) {
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
@@ -35,9 +37,10 @@ public class AuthController {
                             authRequest.getPassword()
                     )
             );
-            return jwtUtil.generateToken(authRequest.getUsername());
+            String token = jwtUtil.generateToken(authRequest.getEmail());
+            return ResponseEntity.ok().body(Map.of("token", token));
         } catch (AuthenticationException e) {
-            throw new RuntimeException("Invalid credentials");
+            return ResponseEntity.status(401).body("Invalid credentials");
         }
     }
 

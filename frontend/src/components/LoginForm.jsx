@@ -1,37 +1,106 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function LoginForm() {
+  const [userId, setUserId] = useState("");
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [role, setRole] = useState("student");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (role === "staff") navigate("/staff");
-    else navigate("/student");
+    console.log("Form submitted");
+    console.log("User ID:", userId);
+    console.log("Email:", email);
+    console.log("Password:", password);
+    console.log("Role:", role);
+
+    try {
+      console.log("Sending POST request to backend...");
+      const response = await axios.post("http://localhost:8080/api/auth/login", {
+        userId: userId,
+        username: email,
+        password: password,
+      });
+      console.log("Response received from backend:", response.data);
+
+      // Store the token in localStorage
+      console.log("Storing token in localStorage...");
+      localStorage.setItem("token", response.data.token);
+
+      // Navigate based on role
+      console.log("Navigating to dashboard based on role...");
+      if (role === "staff") {
+        console.log("Navigating to /staff");
+        navigate("/staff");
+      } else {
+        console.log("Navigating to /student");
+        navigate("/student");
+      }
+    } catch (err) {
+      console.error("Error during login:", err);
+      setError("Invalid login credentials. Please try again.");
+    }
   };
 
   return (
     <form onSubmit={handleSubmit} className="max-w-md mx-auto p-4 bg-white shadow rounded mt-10">
       <h2 className="text-xl font-bold mb-4">Login</h2>
+      {error && <p className="text-red-500 mb-3">{error}</p>}
+      <input
+        type="text"
+        className="w-full p-2 mb-3 border rounded"
+        placeholder="User ID"
+        value={userId}
+        onChange={(e) => {
+          console.log("User ID changed:", e.target.value);
+          setUserId(e.target.value);
+        }}
+        required
+      />
       <input
         type="email"
         className="w-full p-2 mb-3 border rounded"
         placeholder="Email"
         value={email}
-        onChange={(e) => setEmail(e.target.value)}
+        onChange={(e) => {
+          console.log("Email changed:", e.target.value);
+          setEmail(e.target.value);
+        }}
+        required
+      />
+      <input
+        type="password"
+        className="w-full p-2 mb-3 border rounded"
+        placeholder="Password"
+        value={password}
+        onChange={(e) => {
+          console.log("Password changed:", e.target.value);
+          setPassword(e.target.value);
+        }}
         required
       />
       <select
         className="w-full p-2 mb-3 border rounded"
         value={role}
-        onChange={(e) => setRole(e.target.value)}
+        onChange={(e) => {
+          console.log("Role changed:", e.target.value);
+          setRole(e.target.value);
+        }}
       >
         <option value="student">Student</option>
         <option value="staff">Staff</option>
       </select>
-      <button type="submit" className="w-full p-2 bg-blue-500 text-white rounded">Login</button>
+      <button
+        type="submit"
+        className="w-full p-2 bg-blue-500 text-white rounded"
+        onClick={() => console.log("Login button clicked")}
+      >
+        Login
+      </button>
     </form>
   );
 }

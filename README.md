@@ -14,9 +14,8 @@ POST http://localhost:8080/api/auth/register
 }
 
 POST http://localhost:8080/api/auth/login
-
 {
-   "userId": "testUser123" 
+  "userId": "testUser123",
   "username": "testuser@example.com",
   "password": "yourSecurePassword"
 }

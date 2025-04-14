@@ -15,7 +15,7 @@ public class JwtUtil {
     @Value("${jwt.secret}")
     private String secret;
 
-    private final long EXPIRATION_TIME = 86400000; // 1 day
+    private final long EXPIRATION_TIME = 60 * 1000; // 60,000 ms
 
     private Key getSigningKey() {
         byte[] keyBytes = Decoders.BASE64.decode(secret);
@@ -39,6 +39,16 @@ public class JwtUtil {
                 .getBody()
                 .getSubject();
     }
+    public Date extractExpiration(String token) {
+        return extractAllClaims(token).getExpiration();
+    }
+
+    private Claims extractAllClaims(String token) {
+        return Jwts.parser()
+                .setSigningKey(secret)
+                .parseClaimsJws(token)
+                .getBody();
+    }
 
     public boolean validateToken(String token) {
         try {
@@ -50,5 +60,6 @@ public class JwtUtil {
         } catch (JwtException e) {
             return false;
         }
+
     }
 }

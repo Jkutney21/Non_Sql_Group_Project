@@ -53,6 +53,7 @@ public class AuthController {
             return ResponseEntity.ok().body(Map.of(
                     "token", token,
                     "expiresAt", expiration.toString()
+
             ));
         } catch (AuthenticationException e) {
             System.out.println("Authentication failed: " + e.getMessage());
@@ -83,6 +84,7 @@ public class AuthController {
 
             // Extract the username from the token
             String username = jwtUtil.extractUsername(token);
+            
             System.out.println("Extracted username from token: " + username);
 
             // Validate the token
@@ -92,6 +94,7 @@ public class AuthController {
             }
 
             System.out.println("Token is valid for user: " + username);
+
             return ResponseEntity.ok(Map.of("message", "Token is valid", "user", username));
         } catch (Exception e) {
             System.out.println("Exception during token validation: " + e.getMessage());

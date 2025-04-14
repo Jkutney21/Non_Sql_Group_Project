@@ -23,6 +23,7 @@ export default function LoginForm() {
       // Store the token in localStorage
       console.log("Storing token in localStorage...");
       localStorage.setItem("token", response.data.token);
+      localStorage.setItem("role", role);
   
       // Navigate based on role
       console.log("Navigating to dashboard based on role...");

@@ -5,6 +5,7 @@ import StudentDashboard from "./pages/StudentDashboard";
 import StaffDashboard from "./pages/StaffDashboard";
 import ErrorPage from "./pages/Errorpage"; // Import the ErrorPage component
 import JSXerror from "./pages/JSXerror";
+import Register from "./pages/Register";
 import axios from "axios";
 
 const validateToken = async (token) => {
@@ -76,6 +77,12 @@ function App() {
             <ProtectedRoute>
               <StaffDashboard />
             </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/register"
+          element={
+              <Register />
           }
         />
         <Route path="/JSXerror" element={<JSXerror/>} /> 

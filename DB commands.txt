@@ -1,0 +1,100 @@
+use UniversityDB
+
+db.Levels.insertOne({
+  _id: ObjectId("67fbf75dc52ca0182483bd05"),
+  name: "Undergraduate",
+  description: "Undergraduate level for bachelor programs"
+})
+
+db.Levels.insertOne({
+  _id: ObjectId("67fbfbe6c52ca0182483c0bb"),
+  name: "Graduate",
+  description: "Graduate level for master programs"
+})
+
+db.Programs.insertOne({
+  _id: ObjectId("67fbfcb9f8da4a25626e99f0"),
+  name: "Masters of Data Science",
+  department: "Computer Science",
+  level_id: ObjectId("67fbfbe6c52ca0182483c0bb"),
+  required_courses: [
+    { _id: ObjectId("1722d09e43e370aa5c5ac4f8"), course_code: "CS501" },
+    { _id: ObjectId("173bf49145bf204e35bcb3cc"), course_code: "CS502" }
+  ]
+})
+
+db.Programs.insertOne({
+  _id: ObjectId("3b31182c89da9ba1cb33f7f5"),
+  name: "Masters of Computer Science",
+  department: "Computer Science",
+  level_id: ObjectId("67fbfbe6c52ca0182483c0bb"),
+  required_courses: [
+    { _id: ObjectId("1722d09e43e370aa5c5ac4f8"), course_code: "CS501" },
+    { _id: ObjectId("173bf49145bf204e35bcb3cc"), course_code: "CS502" }
+  ]
+})
+
+db.Courses.insertOne({
+  _id: ObjectId("1722d09e43e370aa5c5ac4f8"),
+  course_code: "CS501",
+  title: "Introduction to Data Science",
+  description: "Basics of data handling, stats, and ML",
+  credits: 3,
+  level_id: ObjectId("67fbfbe6c52ca0182483c0bb"),
+  program_ids: [
+    { _id: ObjectId("67fbfcb9f8da4a25626e99f0") },
+    { _id: ObjectId("3b31182c89da9ba1cb33f7f5") }
+  ]
+})
+
+db.Courses.insertOne({
+  _id: ObjectId("173bf49145bf204e35bcb3cc"),
+  course_code: "CS502",
+  title: "Introduction to Computer Science",
+  description: "Basics of scripting languages and web development",
+  credits: 3,
+  level_id: ObjectId("67fbfbe6c52ca0182483c0bb"),
+  program_ids: [
+    { _id: ObjectId("67fbfcb9f8da4a25626e99f0") },
+    { _id: ObjectId("3b31182c89da9ba1cb33f7f5") }
+  ]
+})
+
+db.Professors.insertOne({
+  _id: ObjectId("a3e96f7a39d9ad8d8718b44e"),
+  name: "Dr. Smith",
+  title: "Associate Professor",
+  email: "smith@university.edu",
+  department: "Computer Science",
+  courses_taught_ids: [
+    { _id: ObjectId("1722d09e43e370aa5c5ac4f8") },
+    { _id: ObjectId("173bf49145bf204e35bcb3cc") }
+  ]
+})
+
+db.StudentsAtUniversity.insertOne({
+  _id: ObjectId("11cc86d312d8f3e0721755d5"),
+  name: "Josh Doe",
+  email: "josh@ucmo.edu",
+  program_id: ObjectId("67fbfcb9f8da4a25626e99f0"),
+  level_id: ObjectId("67fbfbe6c52ca0182483c0bb"),
+  enrolled_courses: [
+    {
+      course_id: ObjectId("1722d09e43e370aa5c5ac4f8"),
+      course_code: "CS501",
+      title: "Introduction to Data Science",
+      description: "Basics of data handling, stats, and ML"
+    }
+  ]
+})
+
+db.StudentFinancialAid.insertOne({
+  _id: ObjectId("770fa84ee52d400562db471e"),
+  student_id: ObjectId("11cc86d312d8f3e0721755d5"),
+  account_status: "Active",
+  term: "Spring 2025",
+  aid: [
+    { type: "Grant", description: "Merit-based scholarship" },
+    { type: "Loan", description: "Federal direct loan" }
+  ]
+})

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import jwtDecode from "jwt-decode"; // Used to extract role from backend JWT
+import { jwtDecode } from "jwt-decode"; // Used to extract role from backend JWT
 
 export default function LoginForm() {
   const [role, setRole] = useState("student");

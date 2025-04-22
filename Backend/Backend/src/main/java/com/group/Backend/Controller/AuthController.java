@@ -1,6 +1,5 @@
 package com.group.Backend.Controller;
 
-import java.util.Date;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +26,7 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin(origins = "http://localhost:") // Allow requests from the frontend
+@CrossOrigin(origins = "http://localhost:3000") // Allow requests from the frontend
 public class AuthController {
 
     @Autowired
@@ -53,21 +52,18 @@ public class AuthController {
 
             // Generate the JWT token
             String token = jwtUtil.generateToken(authRequest.getEmail());
+            System.out.println("Authentication successful, token generated.");
 
-            // Extract expiration time from the token
-            Date expiration = jwtUtil.extractExpiration(token);
-            System.out.println("Authentication successful, token generated. Expiration time: " + expiration);
-
-            // Fetch the user's role from the database
+            // Fetch the user's details from the database
             User user = userRepository.findByEmail(authRequest.getEmail());
             if (user == null) {
                 return ResponseEntity.status(404).body("User not found");
             }
 
-            // Return the token, expiration, and role in the response
+            // Return the token, program, and role in the response
             return ResponseEntity.ok().body(Map.of(
                     "token", token,
-                    "expiresAt", expiration.toString(),
+                    "program", user.getProgram(), // Replace expiration with program
                     "role", user.getRole()));
         } catch (AuthenticationException e) {
             System.out.println("Authentication failed: " + e.getMessage());

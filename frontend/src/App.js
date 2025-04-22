@@ -6,6 +6,14 @@ import StaffDashboard from "./pages/StaffDashboard";
 import ErrorPage from "./pages/Errorpage"; // Import the ErrorPage component
 import JSXerror from "./pages/JSXerror";
 import Register from "./pages/Register";
+import CourseList from "./pages/CourseList";
+import Navbar from "./components/Navbar";
+import CourseDetails from "./pages/CourseDetails";
+import ProgramList from "./pages/ProgramList";
+import ProgramDetails from "./pages/ProgramDetails";
+import LevelsPage from "./pages/LevelsPage";
+import ProfessorList from "./pages/ProfessorList";
+import FinancialAidPage from "./pages/FinancialAidPage";
 import axios from "axios";
 
 const validateToken = async (token) => {
@@ -61,6 +69,7 @@ const ProtectedRoute = ({ children }) => {
 function App() {
   return (
     <Router>
+      <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route
@@ -85,6 +94,13 @@ function App() {
               <Register />
           }
         />
+        <Route path="/financial-aid" element={<FinancialAidPage />} />
+        <Route path="/professors" element={<ProfessorList />} />
+        <Route path="/levels" element={<LevelsPage />} />
+        <Route path="/programs/:id" element={<ProgramDetails />} />
+        <Route path="/programs" element={<ProgramList />} />
+        <Route path="/courses/:id" element={<CourseDetails />} />
+        <Route path="/courses" element={<CourseList />} />
         <Route path="/JSXerror" element={<JSXerror/>} /> 
         <Route path="/error" element={<ErrorPage />} /> {/* Error page route */}
         <Route path="*" element={<ErrorPage />} /> {/* Catch-all route */}

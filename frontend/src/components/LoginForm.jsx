@@ -16,7 +16,7 @@ export default function LoginForm() {
     try {
        // Backend expects "username", not "email" in the payload
         const response = await axios.post("http://localhost:8080/api/auth/login", {
-            username: email,
+            email: email,
             password: password,
         });
 

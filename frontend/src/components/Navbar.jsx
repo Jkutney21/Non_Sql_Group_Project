@@ -6,7 +6,7 @@ export default function Navbar() {
     <nav className="bg-blue-600 text-white px-6 py-3 shadow-md">
       <div className="flex justify-between items-center">
         <h1 className="text-lg font-bold">
-          <Link to="/">ER Catalog</Link>
+          <Link to="/">Navbar</Link>
         </h1>
         <div className="space-x-4">
           <Link to="/student" className="hover:underline">Student Dashboard</Link>

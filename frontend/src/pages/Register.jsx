@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -7,15 +8,17 @@ const Register = () => {
     password: '',
     confirmPassword: '',
     role: 'Student',
+    program: '',
   });
 
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Check if passwords match
@@ -26,7 +29,21 @@ const Register = () => {
 
     console.log('Registering:', formData);
     setError(''); // Clear any previous errors
-    // Add your registration logic here
+
+    try {
+      await axios.post("http://localhost:8080/api/auth/register", {
+        email: formData.email,
+        password: formData.password,
+        role: formData.role.toUpperCase(),
+        program: formData.program,
+      });
+
+      alert("Registration successful. You can now log in.");
+      navigate("/");
+    } catch (err) {
+      console.error("Registration failed:", err);
+      setError("Registration error. Email may already exist or fields may be invalid.");
+    }
   };
 
   return (
@@ -70,6 +87,15 @@ const Register = () => {
           <option value="Student">Student</option>
           <option value="Staff">Staff</option>
         </select>
+        <input
+          type="text"
+          name="program"
+          placeholder="Program (e.g., Computer Science)"
+          value={formData.program}
+          onChange={handleChange}
+          required
+          className="border p-2 rounded"
+        />
         {error && <p className="text-red-500 text-sm">{error}</p>}
         <button
           type="submit"

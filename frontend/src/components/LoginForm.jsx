@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import jwtDecode from "jwt-decode";
 
 export default function LoginForm() {
   const [role, setRole] = useState("student");
@@ -14,19 +15,16 @@ export default function LoginForm() {
 
     try {
         const response = await axios.post("http://localhost:8080/api/auth/login", {
-            email: email,
+            username: email,
             password: password,
         });
 
-        // Extract role from server response
-        const serverRole = response.data.role;
+        const token = response.data.token;
+        localStorage.setItem("token", token);
 
-        // Store the token and role in localStorage
-        
-        localStorage.setItem("token", response.data.token);
-        
+        const decoded = jwtDecode(token);
+        const serverRole = decoded.role?.toLowerCase();
 
-        // Navigate based on the server-provided role
         console.log("Navigating to dashboard based on server-provided role...");
         if (serverRole === "staff") {
             console.log("Navigating to /staff");

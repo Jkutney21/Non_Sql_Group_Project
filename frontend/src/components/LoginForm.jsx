@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import jwtDecode from "jwt-decode";
+import jwtDecode from "jwt-decode"; // Used to extract role from backend JWT
 
 export default function LoginForm() {
   const [role, setRole] = useState("student");
@@ -14,17 +14,21 @@ export default function LoginForm() {
     e.preventDefault();
 
     try {
+       // Backend expects "username", not "email" in the payload
         const response = await axios.post("http://localhost:8080/api/auth/login", {
             username: email,
             password: password,
         });
 
+        // Store the JWT in localStorage
         const token = response.data.token;
         localStorage.setItem("token", token);
 
+        // Decode role from token (backend does not return it directly)
         const decoded = jwtDecode(token);
         const serverRole = decoded.role?.toLowerCase();
 
+         // Redirect based on decoded role
         console.log("Navigating to dashboard based on server-provided role...");
         if (serverRole === "staff") {
             console.log("Navigating to /staff");

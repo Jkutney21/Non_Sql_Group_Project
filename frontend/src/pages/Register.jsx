@@ -8,7 +8,7 @@ const Register = () => {
     password: '',
     confirmPassword: '',
     role: 'Student',
-    program: '',
+    program: '', // Required by backend
   });
 
   const [error, setError] = useState('');
@@ -31,6 +31,7 @@ const Register = () => {
     setError(''); // Clear any previous errors
 
     try {
+      // Send required fields to backend including capitalized role and program
       await axios.post("http://localhost:8080/api/auth/register", {
         email: formData.email,
         password: formData.password,

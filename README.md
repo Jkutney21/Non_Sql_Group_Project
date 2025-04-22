@@ -18,7 +18,7 @@ POST http://localhost:8080/api/auth/register
 
 {
   "email": "testuser@example.com",
-  "password": "yourSecurePassword"
+  "password": "yourSecurePassword",
   "role": "STUDENT"
 }
 

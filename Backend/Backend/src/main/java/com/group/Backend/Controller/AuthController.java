@@ -1,20 +1,29 @@
 package com.group.Backend.Controller;
 
-import com.group.Backend.DTO.AuthRequest;
-import com.group.Backend.DTO.RegisterRequest;
-import com.group.Backend.Domain.User;
-import com.group.Backend.Security.JwtUtil;
-import com.group.Backend.Service.RegistrationService;
-import jakarta.validation.Valid;
+import java.util.Date;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Date;
-import java.util.Map;
+import com.group.Backend.DTO.AuthRequest;
+import com.group.Backend.DTO.RegisterRequest;
+import com.group.Backend.Domain.User;
+import com.group.Backend.Domain.UserRepository;
+import com.group.Backend.Security.JwtUtil;
+import com.group.Backend.Service.RegistrationService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -29,6 +38,8 @@ public class AuthController {
 
     @Autowired
     private RegistrationService registrationService; // ✅ Added this
+    @Autowired
+    private UserRepository userRepository;
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody AuthRequest authRequest) {
@@ -38,9 +49,7 @@ public class AuthController {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
                             authRequest.getEmail(),
-                            authRequest.getPassword()
-                    )
-            );
+                            authRequest.getPassword()));
 
             // Generate the JWT token
             String token = jwtUtil.generateToken(authRequest.getEmail());
@@ -49,24 +58,29 @@ public class AuthController {
             Date expiration = jwtUtil.extractExpiration(token);
             System.out.println("Authentication successful, token generated. Expiration time: " + expiration);
 
-            // Return the token and expiration in the response
+            // Fetch the user's role from the database
+            User user = userRepository.findByEmail(authRequest.getEmail());
+            if (user == null) {
+                return ResponseEntity.status(404).body("User not found");
+            }
+
+            // Return the token, expiration, and role in the response
             return ResponseEntity.ok().body(Map.of(
                     "token", token,
-                    "expiresAt", expiration.toString()
-
-            ));
+                    "expiresAt", expiration.toString(),
+                    "role", user.getRole()));
         } catch (AuthenticationException e) {
             System.out.println("Authentication failed: " + e.getMessage());
             return ResponseEntity.status(401).body("Invalid credentials");
         }
     }
 
-
     @PostMapping("/register")
     public ResponseEntity<User> register(@Valid @RequestBody RegisterRequest request) {
         User user = registrationService.register(request);
         return ResponseEntity.ok(user);
     }
+
     @GetMapping("/validate")
     public ResponseEntity<?> validateToken(@RequestHeader("Authorization") String authHeader) {
         try {
@@ -84,7 +98,7 @@ public class AuthController {
 
             // Extract the username from the token
             String username = jwtUtil.extractUsername(token);
-            
+
             System.out.println("Extracted username from token: " + username);
 
             // Validate the token

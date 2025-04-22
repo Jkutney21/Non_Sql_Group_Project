@@ -42,3 +42,34 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .env
+
+### Eclipse ###
+.metadata/
+*.log
+*.tmp
+*.bak
+*.swp
+*.swo
+*.directory
+/RemoteSystemsTempFiles/
+
+### PyCharm ###
+.idea/
+*.pyc
+__pycache__/
+*.pyo
+*.pyd
+*.env
+*.venv
+.env/
+.venv/
+instance/
+.webassets-cache/
+.scrapy/
+.pytest_cache/
+celerybeat-schedule
+*.sage.py
+
+### JetBrains Rider ###
+.idea/
+*.sln.iml

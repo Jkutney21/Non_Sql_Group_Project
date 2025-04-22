@@ -13,32 +13,33 @@ export default function LoginForm() {
     e.preventDefault();
 
     try {
-     
-      const response = await axios.post("http://localhost:8080/api/auth/login", {
-        email: email, // Use "email" instead of "username"
-        password: password,
-      });
-    
-  
-      // Store the token in localStorage
-      console.log("Storing token in localStorage...");
-      localStorage.setItem("token", response.data.token);
-      localStorage.setItem("role", role);
-  
-      // Navigate based on role
-      console.log("Navigating to dashboard based on role...");
-      if (role === "staff") {
-        console.log("Navigating to /staff");
-        navigate("/staff");
-      } else {
-        console.log("Navigating to /student");
-        navigate("/student");
-      }
+        const response = await axios.post("http://localhost:8080/api/auth/login", {
+            email: email,
+            password: password,
+        });
+
+        // Extract role from server response
+        const serverRole = response.data.role;
+
+        // Store the token and role in localStorage
+        
+        localStorage.setItem("token", response.data.token);
+        
+
+        // Navigate based on the server-provided role
+        console.log("Navigating to dashboard based on server-provided role...");
+        if (serverRole === "staff") {
+            console.log("Navigating to /staff");
+            navigate("/staff");
+        } else {
+            console.log("Navigating to /student");
+            navigate("/student");
+        }
     } catch (err) {
-      console.error("Error during login:", err);
-      setError("Invalid login credentials. Please try again.");
+        console.error("Error during login:", err);
+        setError("Invalid login credentials. Please try again.");
     }
-  };
+};
 
   return (
     <form onSubmit={handleSubmit} className="max-w-md mx-auto p-4 bg-white shadow rounded mt-10">

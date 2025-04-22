@@ -3,35 +3,46 @@ package com.group.Backend.Domain;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "courses") // Specify the collection name
+@Document(collection = "courses") // Correctly applied at the class level
 public class Course {
 
     @Id
-    private String courseId; // Unique identifier for the course
-    private String teacherName; // Name of the teacher
-    private String program; // Program that usually takes this course
-    private String time; // Time of the course
-    private String level; // New field for level (e.g., Undergraduate or Graduate)
+    private String courseId;
+    private String courseName;
+    private String teacherName;
+    private String program;
+    private String time;
+    private String level;
 
-    // Constructors
+    // Default constructor (required by Spring Data)
     public Course() {
     }
 
-    public Course(String courseId, String teacherName, String program, String time, String level) {
+    // Constructor with all fields
+    public Course(String courseId, String courseName, String teacherName, String program, String time, String level) {
         this.courseId = courseId;
+        this.courseName = courseName;
         this.teacherName = teacherName;
         this.program = program;
         this.time = time;
         this.level = level;
     }
 
-    // Getters and Setters
+    // Getters and setters
     public String getCourseId() {
         return courseId;
     }
 
     public void setCourseId(String courseId) {
         this.courseId = courseId;
+    }
+
+    public String getCourseName() {
+        return courseName;
+    }
+
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
     }
 
     public String getTeacherName() {
@@ -58,11 +69,11 @@ public class Course {
         this.time = time;
     }
 
-    public String getLevel() { // Getter for level
+    public String getLevel() {
         return level;
     }
 
-    public void setLevel(String level) { // Setter for level
+    public void setLevel(String level) {
         this.level = level;
     }
 }

@@ -27,7 +27,7 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin(origins = "http://localhost:3000") // Allow requests from the frontend
+@CrossOrigin(origins = "http://localhost:") // Allow requests from the frontend
 public class AuthController {
 
     @Autowired

@@ -5,17 +5,22 @@ import com.github.javafaker.Faker;
 import java.util.Random;
 import java.util.stream.IntStream;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import com.group.Backend.Domain.Course;
 import com.group.Backend.Domain.CourseRepository;
+
 import com.group.Backend.Domain.User;
 import com.group.Backend.Domain.UserRepository;
 
 @Component
 public class CourseSeeder implements CommandLineRunner {
+
+    private static final Logger logger = LoggerFactory.getLogger(CourseSeeder.class);
 
     private final CourseRepository courseRepository;
     private final UserRepository userRepository;
@@ -33,6 +38,8 @@ public class CourseSeeder implements CommandLineRunner {
     @Override
     public void run(String... args) {
         if (courseRepository.count() == 0) {
+            logger.info("Starting the seeding process...");
+
             List<List<String>> collegesPrograms = List.of(
                     List.of("Communication Studies", "English", "History", "Sociology", "Political Science",
                             "Theatre and Dance", "Art and Design", "Music", "Religious Studies", "Women's Studies"),
@@ -45,26 +52,53 @@ public class CourseSeeder implements CommandLineRunner {
 
             for (List<String> programList : collegesPrograms) {
                 for (String program : programList) {
-                    int count = random.nextInt(31) + 20; // between 20 and 50
-                    IntStream.range(0, count).forEach(i -> {
-                        String courseId = generateCourseId(program);
-                        String teacher = faker.name().fullName();
-                        String time = generateTime();
-                        String level = random.nextBoolean() ? "Undergraduate" : "Graduate";
+                    int totalCourses = random.nextInt(31) + 20; // 20-50 courses
+                    logger.info("Seeding {} courses for program: {}", totalCourses, program);
 
-                        // Save the course
-                        courseRepository.save(new Course(courseId, teacher, program, time, level));
+                    // Create teachers for this program
+                    int teacherCount = totalCourses / 5 + 1; // One teacher per 5 courses roughly
+                    List<User> programTeachers = IntStream.range(0, teacherCount)
+                            .mapToObj(i -> {
+                                String name = faker.name().fullName();
+                                String email = name.replaceAll(" ", ".").toLowerCase() + "@example.com";
+                                String encodedPwd = passwordEncoder.encode("letmein123");
 
-                        // Create a user for the teacher with role STAFF
-                        if (userRepository
-                                .findByEmail(teacher.replaceAll(" ", ".").toLowerCase() + "@example.com") == null) {
-                            String email = teacher.replaceAll(" ", ".").toLowerCase() + "@example.com";
-                            String password = passwordEncoder.encode("password123"); // Default password
-                            userRepository.save(new User(email, password, "STAFF", program));
+                                // Save teacher user if not already there
+                                if (userRepository.findByEmail(email) == null) {
+                                    User user = new User(email, encodedPwd, "STAFF", program);
+                                    userRepository.save(user);
+                                    logger.info("Created user for teacher: {}", email);
+                                }
+                                return userRepository.findByEmail(email);
+                            })
+                            .toList();
+
+                    // Assign courses to those teachers randomly (2–6 per)
+                    for (User teacher : programTeachers) {
+                        int teacherCourses = 2 + random.nextInt(5); // 2 to 6
+                        for (int i = 0; i < teacherCourses && totalCourses > 0; i++, totalCourses--) {
+                            try {
+                                String courseId = generateCourseId(program);
+                                String courseName = generateCourseName(program);
+                                String time = generateTime();
+                                String level = random.nextBoolean() ? "Undergraduate" : "Graduate";
+
+                                courseRepository.save(new Course(
+                                        courseId, courseName, teacher.getEmail(), program, time, level));
+
+                                logger.info("Assigned course {} - {} to teacher {}", courseId, courseName,
+                                        teacher.getEmail());
+                            } catch (Exception e) {
+                                logger.error("Error creating course for program {}: {}", program, e.getMessage());
+                            }
                         }
-                    });
+                    }
                 }
             }
+
+            logger.info("Seeding process completed.");
+        } else {
+            logger.info("Courses already exist in the database. Skipping seeding process.");
         }
     }
 
@@ -72,6 +106,12 @@ public class CourseSeeder implements CommandLineRunner {
         String code = program.replaceAll("[^A-Za-z]", "").toUpperCase();
         code = code.length() > 4 ? code.substring(0, 4) : code;
         return code + (100 + random.nextInt(400));
+    }
+
+    private String generateCourseName(String program) {
+        String[] courseTopics = { "Introduction to", "Advanced", "Fundamentals of", "Principles of",
+                "Applications of" };
+        return courseTopics[random.nextInt(courseTopics.length)] + " " + program;
     }
 
     private String generateTime() {

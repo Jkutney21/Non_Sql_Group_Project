@@ -30,8 +30,10 @@ docker exec -it mongo mongosh
   "password": "yourSecurePassword"
 }
 
+## end points for courses
+# ---
 
-## GET /api/auth/department?department=Computer Science
+## GET /api/courses/department?department=Computer Science
 
 names of the deparments 
 {
@@ -44,12 +46,12 @@ names of the deparments
     "Accounting", "Finance", "Marketing", "Management", "Entrepreneurship", "Aviation",
     "Criminal Justice", "Social Work"
 }
-## GET /api/auth
+## GET /api/courses
 Description: Retrieves a list of all courses.
 
 
 
-POST /api/auth/add
+## POST /api/courses/add
 {
   {
     "id": "12345",
@@ -58,3 +60,8 @@ POST /api/auth/add
     "credits": 3
 }
 }
+
+## end points for finacal aid 
+# ---
+
+## GET http://localhost:8080/api/aid/user/{USERID}

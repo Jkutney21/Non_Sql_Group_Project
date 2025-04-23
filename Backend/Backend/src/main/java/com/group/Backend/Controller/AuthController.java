@@ -64,7 +64,9 @@ public class AuthController {
             return ResponseEntity.ok().body(Map.of(
                     "token", token,
                     "program", user.getProgram(), // Replace expiration with program
-                    "role", user.getRole()));
+                    "role", user.getRole(),
+                    "id", user.getUserId() 
+                    ));
         } catch (AuthenticationException e) {
             System.out.println("Authentication failed: " + e.getMessage());
             return ResponseEntity.status(401).body("Invalid credentials");

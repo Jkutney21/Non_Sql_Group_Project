@@ -29,6 +29,8 @@ public class SecurityConfig {
                 .cors(cors -> cors.disable()) // Disable CORS
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/api/course/**").permitAll()
+                        .requestMatchers("/api/aid/**").permitAll()
                         .requestMatchers("/api/auth/**").permitAll() // Allow all /api/auth/** endpoints
                         .anyRequest().authenticated()) // Require authentication for other endpoints
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);

@@ -1,32 +1,57 @@
 package com.group.Backend.Domain;
 
+import java.util.UUID;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import jakarta.persistence.Entity;
-
-@Entity
 @Document(collection = "users")
 public class User {
 
     @Id
+    private String id; // MongoDB's unique identifier
+    private String userId; // Custom user ID
     private String email;
     private String password;
-    private String role = "USER";
-    private String program; // New field for program
+    private String role;
+    private String program;
 
-    // Constructors
+    // Default Constructor
     public User() {
+        this.userId = generateUserId(); // Automatically generate userId
     }
 
+    // Constructor with parameters
     public User(String email, String password, String role, String program) {
+        this.userId = generateUserId(); // Automatically generate userId
         this.email = email;
         this.password = password;
         this.role = role;
         this.program = program;
     }
 
-    // Getters and Setters
+    // Utility method to generate a random userId
+    private String generateUserId() {
+        return UUID.randomUUID().toString();
+    }
+
+    // Getters and setters
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
     public String getEmail() {
         return email;
     }

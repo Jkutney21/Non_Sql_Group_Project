@@ -1,11 +1,10 @@
 package com.group.Backend.Repository;
 
-import java.util.List;
-
-import org.springframework.data.jpa.repository.JpaRepository;
-
+import org.springframework.data.mongodb.repository.MongoRepository;
 import com.group.Backend.Domain.FinancialAid;
 
-public interface FinancialAidRepository extends JpaRepository<FinancialAid, String> {
+import java.util.List;
+
+public interface FinancialAidRepository extends MongoRepository<FinancialAid, String> {
     List<FinancialAid> findByUserId(String userId);
 }

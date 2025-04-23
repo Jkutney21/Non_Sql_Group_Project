@@ -2,6 +2,7 @@ package com.group.Backend.Controller;
 
 import java.util.List;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,6 +14,7 @@ import com.group.Backend.Domain.FinancialAid;
 import com.group.Backend.Service.FinancialAidService;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000") // Allow requests from the frontend
 @RequestMapping("/api/aid")
 public class FinancialAidController {
 

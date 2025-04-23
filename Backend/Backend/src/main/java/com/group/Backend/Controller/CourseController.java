@@ -21,7 +21,7 @@ import com.group.Backend.Domain.Course;
 import com.group.Backend.Service.CourseService;
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/api/courses")
 @CrossOrigin(origins = "http://localhost:3000") // Allow requests from the frontend
 public class CourseController {
 

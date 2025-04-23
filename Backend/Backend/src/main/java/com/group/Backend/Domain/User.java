@@ -3,6 +3,9 @@ package com.group.Backend.Domain;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import jakarta.persistence.Entity;
+
+@Entity
 @Document(collection = "users")
 public class User {
 

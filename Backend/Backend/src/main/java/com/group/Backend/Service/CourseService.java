@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.group.Backend.Domain.Course;
-import com.group.Backend.Domain.CourseRepository;
+import com.group.Backend.Repository.CourseRepository;
 
 @Service
 

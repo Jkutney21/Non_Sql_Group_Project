@@ -1,7 +1,6 @@
 package com.group.Backend.Config;
 
 import java.util.List;
-import com.github.javafaker.Faker;
 import java.util.Random;
 import java.util.stream.IntStream;
 
@@ -11,11 +10,11 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import com.github.javafaker.Faker;
 import com.group.Backend.Domain.Course;
-import com.group.Backend.Domain.CourseRepository;
-
 import com.group.Backend.Domain.User;
-import com.group.Backend.Domain.UserRepository;
+import com.group.Backend.Repository.CourseRepository;
+import com.group.Backend.Repository.UserRepository;
 
 @Component
 public class CourseSeeder implements CommandLineRunner {

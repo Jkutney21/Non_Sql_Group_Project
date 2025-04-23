@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.group.Backend.DTO.AuthRequest;
 import com.group.Backend.DTO.RegisterRequest;
 import com.group.Backend.Domain.User;
-import com.group.Backend.Domain.UserRepository;
+import com.group.Backend.Repository.UserRepository;
 import com.group.Backend.Security.JwtUtil;
 import com.group.Backend.Service.RegistrationService;
 

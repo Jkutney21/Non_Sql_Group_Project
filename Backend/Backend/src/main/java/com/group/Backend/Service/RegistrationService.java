@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.group.Backend.DTO.RegisterRequest;
 import com.group.Backend.Domain.User;
-import com.group.Backend.Domain.UserRepository;
+import com.group.Backend.Repository.UserRepository;
 
 @Service
 public class RegistrationService {

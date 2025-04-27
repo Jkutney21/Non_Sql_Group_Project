@@ -1,0 +1,65 @@
+/* Navbar container */
+.header-navbar {
+    width: 100%; /* Full width */
+    background-color: #f8f9fa; /* Light gray background */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px; /* Add padding for spacing */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    position: fixed; /* Fix the header to the top */
+    top: 0;
+    left: 0;
+    z-index: 1000; /* Ensure it stays on top */
+  }
+  
+  /* Brand link */
+  .header-brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #007bff; /* Bootstrap blue */
+    text-decoration: none;
+  }
+  
+  .header-brand:hover {
+    text-decoration: underline;
+  }
+  
+  /* Navigation links container */
+  .header-links {
+    display: flex;
+    align-items: center;
+  }
+  
+  /* Navigation list */
+  .header-nav {
+    list-style: none;
+    display: flex;
+    gap: 20px; /* Space between links */
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Navigation items */
+  .header-nav-item {
+    display: inline-block;
+    
+  }
+  .last-header-nav-item {
+    display: inline-block;
+    margin-right: 30px;
+  }
+  
+  /* Navigation links */
+  .header-nav-link {
+    font-size: 1rem;
+    color: #343a40; /* Dark gray */
+    text-decoration: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+  }
+  
+  .header-nav-link:hover {
+    background-color: #e9ecef; /* Light gray hover */
+    color: #007bff; /* Bootstrap blue */
+  }

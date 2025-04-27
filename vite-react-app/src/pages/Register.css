@@ -1,0 +1,154 @@
+.register-select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.register-page {
+    min-height: 80vh;
+    background-color: transparent;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+}
+
+.register-container {
+    max-width: 400px;
+    width: 100%;
+    background-color: #ffffff;
+    padding: 32px 64px; /* Reduced top and bottom padding to 32px, left and right remain 64px */
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center all content horizontally */
+    justify-content: center; /* Center all content vertically */
+}
+
+.register-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    top: 100%;
+    text-align: center;
+}
+
+.register-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%; /* Ensure the form takes full width */
+    align-items: center; /* Center form elements horizontally */
+}
+
+.register-inline-fields {
+    display: flex;
+    gap: 16px;
+    width: 100%; /* Ensure inline fields take full width */
+}
+
+.register-inline-fields > * {
+    flex: 1;
+}
+
+.email-register-input {
+    width: 100%;
+    min-width: 180px;
+    padding: 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    font-size: 1rem;
+    display: block; /* Ensure it's treated as a block element */
+    margin: 0 auto; /* Center horizontally */
+}
+.register-input {
+    width: 100%;
+    min-width: 180px;
+    padding: 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.register-program-field {
+    position: relative;
+    width: 100%;
+}
+
+.register-program-input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.program-suggestions {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: #ffffff;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    max-height: 150px;
+    overflow-y: auto;
+    z-index: 1000;
+    margin-top: 4px;
+    padding: 0;
+    list-style: none;
+}
+
+.program-suggestion-item {
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 0.875rem;
+}
+
+.program-suggestion-item:hover {
+    background-color: #f3f4f6;
+}
+
+.register-error {
+    color: #dc2626;
+    font-size: 0.875rem;
+    text-align: center;
+}
+
+.register-button {
+    width: 100%; /* Ensure the button takes full width */
+    max-width: 200px; /* Optional: Limit the button width */
+    min-width: 180px; /* Ensure the button has a minimum width */
+    padding: 12px;
+    background-color: #2563eb;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    text-align: center; /* Center text inside the button */
+}
+
+.register-button:hover {
+    background-color: #1d4ed8;
+}
+
+.register-footer {
+    margin-top: 16px;
+    font-size: 0.875rem;
+    color: #6b7280;
+    text-align: center;
+}
+
+.register-link {
+    color: #2563eb;
+    text-decoration: none;
+}
+
+.register-link:hover {
+    text-decoration: underline;
+}

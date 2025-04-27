@@ -1,0 +1,67 @@
+/* Footer container */
+.footer-container {
+    width: 100%; /* Full width */
+    background-color: #f8f9fa; /* Light gray background */
+    position: fixed; /* Fix footer to the bottom */
+    bottom: 0;
+    left: 0;
+    z-index: 1000; /* Ensure it stays on top of other elements */
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  }
+  
+  /* Footer content */
+  .footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px; /* Add padding for spacing */
+    max-width: 1200px;
+    margin: 0 auto; /* Center the content */
+  }
+  
+  /* Company info */
+  .footer-company-info {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between logo and text */
+  }
+  
+  .footer-logo-link {
+    text-decoration: none;
+    color: #6c757d; /* Gray color */
+  }
+  
+  .footer-logo-icon {
+    fill: #6c757d; /* Gray color */
+  }
+  
+  .footer-company-text {
+    font-size: 0.875rem; /* Small text */
+    color: #6c757d; /* Gray color */
+  }
+  
+  /* Social links */
+  .footer-social-links {
+    display: flex;
+    list-style: none;
+    gap: 15px; /* Space between social icons */
+    margin: 0;
+    padding: 0;
+  }
+  
+  .footer-social-item {
+    display: inline-block;
+  }
+  
+  .footer-social-link {
+    text-decoration: none;
+    color: #6c757d; /* Gray color */
+  }
+  
+  .footer-social-link:hover {
+    color: #007bff; /* Bootstrap blue on hover */
+  }
+  
+  .footer-social-icon {
+    fill: currentColor; /* Inherit color from parent */
+  }

@@ -94,13 +94,7 @@ function App() {
               <Register />
           }
         />
-        <Route path="/financial-aid" element={<FinancialAidPage />} />
-        <Route path="/professors" element={<ProfessorList />} />
-        <Route path="/levels" element={<LevelsPage />} />
-        <Route path="/programs/:id" element={<ProgramDetails />} />
-        <Route path="/programs" element={<ProgramList />} />
-        <Route path="/courses/:id" element={<CourseDetails />} />
-        <Route path="/courses" element={<CourseList />} />
+       
         <Route path="/JSXerror" element={<JSXerror/>} /> 
         <Route path="/error" element={<ErrorPage />} /> {/* Error page route */}
         <Route path="*" element={<ErrorPage />} /> {/* Catch-all route */}

@@ -1,5 +1,7 @@
 package com.group.Backend.Config;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,7 +13,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.group.Backend.Security.JwtFilter;
 
@@ -26,14 +27,23 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf.disable())
-                .cors(cors -> cors.disable()) // Disable CORS
+                .cors(cors -> cors.configurationSource(request -> {
+                    var corsConfig = new org.springframework.web.cors.CorsConfiguration();
+                    corsConfig.setAllowedOrigins(List.of("http://localhost:5173")); // Allow frontend origin
+                    corsConfig.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS")); // Allow HTTP
+                                                                                                      // methods
+                    corsConfig.setAllowedHeaders(List.of("Authorization", "Content-Type")); // Allow headers
+                    corsConfig.setExposedHeaders(List.of("Authorization")); // Expose headers
+                    return corsConfig;
+                }))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/course/**").permitAll()
+                        .requestMatchers("/api/course/*").permitAll()
                         .requestMatchers("/api/aid/**").permitAll()
-                        .requestMatchers("/api/auth/**").permitAll() // Allow all /api/auth/** endpoints
-                        .anyRequest().authenticated()) // Require authentication for other endpoints
-                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+                        .requestMatchers("/api/aid/*").permitAll()
+                        .requestMatchers("/api/auth/**").permitAll()
+                        .anyRequest().authenticated());
 
         return http.build();
     }

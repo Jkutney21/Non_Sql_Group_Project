@@ -1,4 +1,16 @@
 import { useEffect, useState } from "react";
+import "./StudentDashboard.css"; // Import the CSS file
+
+const departments = [
+  "Communication Studies", "English", "History", "Sociology", "Political Science",
+  "Theatre and Dance", "Art and Design", "Music", "Religious Studies", "Women's Studies",
+  "Elementary Education", "Early Childhood Education", "Secondary Education",
+  "Special Education", "Educational Leadership", "Career and Technology Education",
+  "Health Studies", "Nursing", "Nutrition", "Kinesiology", "Biology", "Environmental Science",
+  "Computer Science", "Cybersecurity", "Design and Drafting Technology",
+  "Accounting", "Finance", "Marketing", "Management", "Entrepreneurship", "Aviation",
+  "Criminal Justice", "Social Work"
+];
 
 export default function StudentDashboard() {
   const [courses, setCourses] = useState<{
@@ -10,21 +22,23 @@ export default function StudentDashboard() {
     level: string;
   }[]>([]);
   const [error, setError] = useState("");
+  const [selectedProgram, setSelectedProgram] = useState(
+    localStorage.getItem("program") || "Computer Science"
+  );
 
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const token = localStorage.getItem("token"); // Retrieve the JWT token from localStorage
-        const program = localStorage.getItem("program"); // Retrieve the program from localStorage
-
-        if (!program) {
-          throw new Error("Program not found in local storage.");
+        if (!selectedProgram) {
+          throw new Error("Program not selected.");
         }
 
         const response = await fetch(
-          `http://localhost:8080/api/courses/department?department=${encodeURIComponent(program)}`,
+          `http://localhost:8080/api/courses/department?department=${encodeURIComponent(
+            selectedProgram
+          )}`,
           {
-            method: "GET"
+            method: "GET",
           }
         );
 
@@ -46,34 +60,68 @@ export default function StudentDashboard() {
     };
 
     fetchCourses();
-  }, []);
+  }, [selectedProgram]);
+
+  const handleProgramChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const newProgram = e.target.value;
+    setSelectedProgram(newProgram);
+    localStorage.setItem("program", newProgram); // Save the selected program to local storage
+  };
 
   return (
-    <div className="p-6 bg-gray-100 min-h-screen">
-      <h1 className="text-3xl font-bold mb-4">Student Dashboard</h1>
-      {error && <p className="text-red-500 mb-4">{error}</p>}
-      <p>Welcome, student! Here you'll see your enrolled courses and programs.</p>
+    <div className="student-dashboard-container">
+      <h1 className="student-dashboard-title">Student Dashboard</h1>
 
-      <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="bg-white p-4 rounded shadow">
-          <h2 className="text-xl font-semibold mb-2">Enrolled Courses</h2>
-          {courses.length > 0 ? (
-            <ul className="list-disc pl-5">
-              {courses.map((course, index) => (
-                <li key={index}>
-                  <strong>{course.courseId}</strong>: {course.courseName} - {course.teacherName} ({course.time})
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p>No courses found.</p>
-          )}
-        </div>
+      <div className="student-dashboard-program-selector">
+        <label htmlFor="program-select" className="student-dashboard-label">
+          Select Department:
+        </label>
+        <select
+          id="program-select"
+          value={selectedProgram}
+          onChange={handleProgramChange}
+          className="student-dashboard-dropdown"
+          
+        >
+          {departments.map((department, index) => (
+            <option key={index} value={department}>
+              {department}
+            </option>
+          ))}
+        </select>
+      </div>
 
-        <div className="bg-white p-4 rounded shadow">
-          <h2 className="text-xl font-semibold mb-2">Your Program</h2>
-          <p>{localStorage.getItem("program") || "Program not found"}</p>
-        </div>
+      {error && <p className="student-dashboard-error">{error}</p>}
+
+      <div className="student-dashboard-courses">
+        <h2 className="student-dashboard-subtitle">Courses for {selectedProgram}</h2>
+        {courses.length > 0 ? (
+          <div className="student-dashboard-course-grid">
+            {courses.map((course, index) => (
+              <div key={index} className="student-dashboard-card">
+                <ul className="student-dashboard-card-list">
+                  <li className="student-dashboard-card-item">
+                    <strong>Course ID:</strong> {course.courseId}
+                  </li>
+                  <li className="student-dashboard-card-item">
+                    <strong>Course Name:</strong> {course.courseName}
+                  </li>
+                  <li className="student-dashboard-card-item">
+                    <strong>Teacher:</strong> {course.teacherName}
+                  </li>
+                  <li className="student-dashboard-card-item">
+                    <strong>Time:</strong> {course.time}
+                  </li>
+                  <li className="student-dashboard-card-item">
+                    <strong>Level:</strong> {course.level}
+                  </li>
+                </ul>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p className="student-dashboard-no-courses">No courses found.</p>
+        )}
       </div>
     </div>
   );

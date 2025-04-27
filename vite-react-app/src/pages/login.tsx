@@ -11,52 +11,51 @@ export default function LoginPage() {
   const [password, setPassword] = useState("yourSecurePassword");
   const navigate = useNavigate();
 
-  
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
-
-    console.log("Login form submitted");
-    console.log("Email:", email);
-    console.log("Password:", password);
-
+  
     try {
-        const response = await axios.post("http://localhost:8080/api/auth/login", {
-            email: email,
-            password: password,
-        });
-
-        console.log("Response received from server:", response);
-
-        const token = response.data.token;
-        const serverRole = response.data.role.toLowerCase(); // Use role directly from the response
-        const userId = response.data.id; // Extract the user ID
-        const userProgram = response.data.program; // Extract the program
-
-        console.log("Token received:", token);
-        console.log("Role from response:", serverRole);
-        console.log("User ID:", userId);
-        console.log("User Program:", userProgram);
-
-        // Save token, role, id, and program in local storage
-        localStorage.setItem("token", token);
-        localStorage.setItem("role", serverRole);
-        localStorage.setItem("id", userId);
-        localStorage.setItem("program", userProgram);
-
-        if (serverRole === "staff") {
-            console.log("Navigating to /staff");
-            navigate("/staff");
-        } else if (serverRole === "student") {
-            console.log("Navigating to /student");
-            navigate("/student");
-        } else {
-            throw new Error("Unknown role received from server");
-        }
+      const response = await axios.post("http://localhost:8080/api/auth/login", {
+        email: email,
+        password: password,
+      });
+  
+      console.log("Response received from server:", response.data);
+  
+      const token = response.data.token;
+      const serverRole = response.data.role.toLowerCase(); // Use role directly from the response
+      const userId = response.data.id; // Extract the user ID
+      const userProgram = response.data.program; // Extract the program
+  
+      if (!token || !serverRole || !userId || !userProgram) {
+        throw new Error("Invalid response structure from server.");
+      }
+  
+      // Save token, role, id, and program in local storage
+      localStorage.setItem("token", token);
+      localStorage.setItem("role", serverRole);
+      localStorage.setItem("id", userId);
+      localStorage.setItem("program", userProgram);
+  
+      console.log("Token saved:", localStorage.getItem("token"));
+      console.log("Role saved:", localStorage.getItem("role"));
+      console.log("ID saved:", localStorage.getItem("id"));
+      console.log("Program saved:", localStorage.getItem("program"));
+  
+      if (serverRole === "staff") {
+        console.log("Navigating to /staff");
+        navigate("/staff");
+      } else if (serverRole === "student") {
+        console.log("Navigating to /student");
+        navigate("/student");
+      } else {
+        throw new Error("Unknown role received from server");
+      }
     } catch (err) {
-        console.error("Error during login:", err);
-        setError("Invalid login credentials. Please try again.");
+      console.error("Error during login:", err);
+      setError("Invalid login credentials. Please try again.");
     }
-};
+  };
 
   return (
     <div className="login-container">

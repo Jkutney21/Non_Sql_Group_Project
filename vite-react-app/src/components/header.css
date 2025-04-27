@@ -63,3 +63,13 @@
     background-color: #e9ecef; /* Light gray hover */
     color: #007bff; /* Bootstrap blue */
   }
+  .signout-button {
+    background-color: transparent;
+    display: inline-block;
+    border: none; /* Remove any default button border */
+    color: inherit; /* Inherit text color */
+    font: inherit; /* Inherit font styling */
+    cursor: pointer; /* Change cursor to pointer */
+    
+    padding: 0; /* Remove default padding */
+}

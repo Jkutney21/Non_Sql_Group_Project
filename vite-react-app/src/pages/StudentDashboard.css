@@ -1,0 +1,72 @@
+.student-dashboard-container {
+    margin-top: 40px;
+    padding: 20px;
+    background-color: transparent;
+    min-height: 80vh;
+  }
+  
+  .student-dashboard-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .student-dashboard-program-selector {
+    margin-bottom: 20px;
+  }
+  
+  .student-dashboard-label {
+    font-size: 16px;
+    margin-right: 10px;
+  }
+  
+  .student-dashboard-dropdown {
+    padding: 8px;
+    font-size: 16px;
+    max-height: 50px; /* Limit the height of the dropdown */
+    overflow-y: hidden; 
+  }
+  
+  .student-dashboard-error {
+    color: red;
+    margin-bottom: 20px;
+  }
+  
+  .student-dashboard-courses {
+    margin-top: 20px;
+  }
+  
+  .student-dashboard-subtitle {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .student-dashboard-course-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  
+  .student-dashboard-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .student-dashboard-card-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .student-dashboard-card-item {
+    margin-bottom: 8px;
+  }
+  
+  .student-dashboard-no-courses {
+    font-size: 16px;
+    color: #555;
+  }

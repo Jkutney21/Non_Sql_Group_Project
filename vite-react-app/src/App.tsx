@@ -8,6 +8,7 @@ import StaffDashboard from "./pages/StaffDashboard";
 import ErrorPage from "./pages/Errorpage";
 import JSXerror from "./pages/JSXerror";
 import Footer from "./components/footer";
+import StudentFin from "./pages/StudentFIn";
 
 import HeaderBasic from "./components/header"; // Basic header for unauthenticated users
 import { jwtDecode } from "jwt-decode";
@@ -34,7 +35,7 @@ function App() {
   const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [isValid, setIsValid] = useState<boolean | null>(null);
     const token = localStorage.getItem("token");
-    const role = localStorage.getItem("role"); // Retrieve the role from local storage
+    const role = localStorage.getItem("role"); 
   
     useEffect(() => {
       const checkToken = async () => {
@@ -66,6 +67,9 @@ function App() {
     }
   
     if (!isValid) {
+          
+          localStorage.removeItem("token");
+          localStorage.removeItem("role");
       return <Navigate to="/JSXerror" />;
     }
   
@@ -100,6 +104,14 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route
+          path="/financialAid"
+          element={
+            <ProtectedRoute>
+              <StudentFin />
+            </ProtectedRoute>
+          }
+        />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route
@@ -115,7 +127,7 @@ function App() {
     path="/error"
     element={
       <>
-        <HeaderBasic role={null} /> {/* Render Header with role=null */}
+        <HeaderBasic role={null} /> 
         <ErrorPage />
       </>
     }
@@ -124,7 +136,7 @@ function App() {
     path="*"
     element={
       <>
-        <HeaderBasic role={null} /> {/* Render Header with role=null */}
+        <HeaderBasic role={null} />
         <ErrorPage />
       </>
     }

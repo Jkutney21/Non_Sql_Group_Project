@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
-import {jwtDecode }from "jwt-decode"; // Corrected import for jwtDecode
+
 import "./login.css"; // Import the CSS file
 
 export default function LoginPage() {
@@ -29,13 +29,19 @@ export default function LoginPage() {
 
         const token = response.data.token;
         const serverRole = response.data.role.toLowerCase(); // Use role directly from the response
+        const userId = response.data.id; // Extract the user ID
+        const userProgram = response.data.program; // Extract the program
 
         console.log("Token received:", token);
         console.log("Role from response:", serverRole);
+        console.log("User ID:", userId);
+        console.log("User Program:", userProgram);
 
-        // Save token and role in local storage
+        // Save token, role, id, and program in local storage
         localStorage.setItem("token", token);
         localStorage.setItem("role", serverRole);
+        localStorage.setItem("id", userId);
+        localStorage.setItem("program", userProgram);
 
         if (serverRole === "staff") {
             console.log("Navigating to /staff");

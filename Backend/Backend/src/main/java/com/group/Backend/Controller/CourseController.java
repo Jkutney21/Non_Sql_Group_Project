@@ -39,15 +39,21 @@ public class CourseController {
     }
 
     @GetMapping("/department")
-    public List<Course> getCoursesByDepartment(@RequestParam String department) {
-        logger.info("Received request to get courses by department: {}", department);
-        if (department == null || department.isEmpty()) {
-            logger.error("Department is null or empty");
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Department cannot be null or empty");
+    public List<Course> getCoursesByDepartment(@RequestParam(value = "department", required = false) String department) {
+        try {
+            if (department == null || department.isEmpty()) {
+                logger.error("Department is null or empty");
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Department cannot be null or empty");
+            }
+            logger.info("Received request to get courses by department: {}", department);
+            return courseService.getCoursesByDepartment(department);
+        } catch (IllegalArgumentException e) {
+            logger.error("Invalid argument provided: {}", e.getMessage(), e);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid argument provided");
+        } catch (Exception e) {
+            logger.error("Error occurred while fetching courses by department: {}", e.getMessage(), e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "An error occurred while processing the request");
         }
-        List<Course> courses = courseService.getCoursesByDepartment(department);
-        logger.info("Courses retrieved for department {}: {}", department, courses);
-        return courses;
     }
 
     @GetMapping

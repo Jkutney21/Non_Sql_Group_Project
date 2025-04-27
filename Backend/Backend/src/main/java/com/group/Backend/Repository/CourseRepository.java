@@ -8,4 +8,8 @@ import com.group.Backend.Domain.Course;
 
 public interface CourseRepository extends MongoRepository<Course, String> {
     List<Course> findByProgramContainingIgnoreCase(String program);
+
+    List<Course> findByCourseNameContainingIgnoreCase(String courseName);
+
+    List<Course> findByTeacherNameContainingIgnoreCase(String teacherName); // Fixed
 }

@@ -38,6 +38,8 @@ public class SecurityConfig {
                 }))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/api/courses/**").permitAll() // Allow access to /api/courses/**
+                        .requestMatchers("/error").permitAll() // Allow access to /error
                         .anyRequest().permitAll() // Allow all requests
                 );
 

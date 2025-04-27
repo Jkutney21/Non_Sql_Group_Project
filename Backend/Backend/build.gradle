@@ -40,7 +40,6 @@ dependencies {
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
-
 // ✅ Fix the broken android-classified artifact issue
 configurations.all {
     resolutionStrategy.eachDependency { details ->
@@ -54,4 +53,9 @@ configurations.all {
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+// Add the -parameters compiler argument
+tasks.withType(JavaCompile) {
+    options.compilerArgs << "-parameters"
 }

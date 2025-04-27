@@ -34,5 +34,5 @@ public class CourseService {
     public List<Course> getCoursesByDepartment(String department) {
         return courseRepository.findByProgramContainingIgnoreCase(department); // Retrieve courses by department
     }
-    
+
 }

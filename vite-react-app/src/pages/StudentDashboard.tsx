@@ -1,23 +1,39 @@
 import { useEffect, useState } from "react";
 
 export default function StudentDashboard() {
-  const [courses, setCourses] = useState<{ name: string }[]>([]);
+  const [courses, setCourses] = useState<{
+    courseId: string;
+    courseName: string;
+    teacherName: string;
+    program: string;
+    time: string;
+    level: string;
+  }[]>([]);
   const [error, setError] = useState("");
 
   useEffect(() => {
     const fetchCourses = async () => {
       try {
         const token = localStorage.getItem("token"); // Retrieve the JWT token from localStorage
-        const response = await fetch("http://localhost:8080/api/auth/courses", {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        });
+        const program = localStorage.getItem("program"); // Retrieve the program from localStorage
+
+        if (!program) {
+          throw new Error("Program not found in local storage.");
+        }
+
+        const response = await fetch(
+          `http://localhost:8080/api/courses/department?department=${encodeURIComponent(program)}`,
+          {
+            method: "GET"
+          }
+        );
 
         if (response.status === 403) {
           throw new Error("Access forbidden. Please check your permissions.");
+        }
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch courses. Please try again later.");
         }
 
         const data = await response.json();
@@ -44,7 +60,9 @@ export default function StudentDashboard() {
           {courses.length > 0 ? (
             <ul className="list-disc pl-5">
               {courses.map((course, index) => (
-                <li key={index}>{course.name}</li> // Assuming each course has a "name" property
+                <li key={index}>
+                  <strong>{course.courseId}</strong>: {course.courseName} - {course.teacherName} ({course.time})
+                </li>
               ))}
             </ul>
           ) : (
@@ -54,7 +72,7 @@ export default function StudentDashboard() {
 
         <div className="bg-white p-4 rounded shadow">
           <h2 className="text-xl font-semibold mb-2">Your Program</h2>
-          <p>Masters of Data Science and AI</p>
+          <p>{localStorage.getItem("program") || "Program not found"}</p>
         </div>
       </div>
     </div>

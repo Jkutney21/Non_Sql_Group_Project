@@ -61,7 +61,7 @@ public class AuthController {
             }
 
             // Return the token, program, and role in the response
-            return ResponseEntity.ok().body(Map.of(
+            return ResponseEntity.ok(Map.of(
                     "token", token,
                     "program", user.getProgram(), // Replace expiration with program
                     "role", user.getRole(),

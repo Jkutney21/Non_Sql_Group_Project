@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../api";
 
 export default function LevelsPage() {
   const [levels, setLevels] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:8080/api/levels")
+    api.get("/api/levels")
       .then((res) => setLevels(res.data))
       .catch((err) => console.error("Failed to fetch levels:", err));
   }, []);

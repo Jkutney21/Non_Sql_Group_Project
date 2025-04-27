@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
+import api from "../api";
 
 export default function CourseDetails() {
   const { id } = useParams(); // get course ID from URL
   const [course, setCourse] = useState(null);
 
   useEffect(() => {
-    axios.get(`http://localhost:8080/api/courses/${id}`)
+    api.get(`/api/courses/${id}`)
       .then((res) => {
         setCourse(res.data);
       })

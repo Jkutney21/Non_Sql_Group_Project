@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../api";
 import CourseCard from "../components/CourseCard";
 
 export default function CourseList() {
   const [courses, setCourses] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:8080/api/courses")
+    api.get("/api/courses")
       .then((res) => {
         setCourses(res.data);
       })

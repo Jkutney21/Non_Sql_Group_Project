@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
+import api from "../api";
 
 export default function ProgramDetails() {
   const { id } = useParams();
   const [program, setProgram] = useState(null);
 
   useEffect(() => {
-    axios.get(`http://localhost:8080/api/programs/${id}`)
+    api.get(`/api/programs/${id}`)
       .then((res) => setProgram(res.data))
       .catch((err) => console.error("Error loading program:", err));
   }, [id]);

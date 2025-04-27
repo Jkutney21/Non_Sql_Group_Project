@@ -8,7 +8,7 @@ export default function StudentDashboard() {
     const fetchCourses = async () => {
       try {
         const token = localStorage.getItem("token"); // Retrieve the JWT token from localStorage
-        const response = await fetch("http://localhost:8080/api/auth/courses", {
+        const response = await fetch("/api/auth/courses", {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`,
@@ -22,7 +22,7 @@ export default function StudentDashboard() {
 
         const data = await response.json();
         console.log("API Response:", data); // Log the response to the console
-        setCourses(data); // Assuming the API returns an array of courses
+        setCourses(data); 
       } catch (err) {
         console.error("Error fetching courses:", err);
         setError(err.message || "Failed to fetch courses.");
@@ -44,7 +44,7 @@ export default function StudentDashboard() {
           {courses.length > 0 ? (
             <ul className="list-disc pl-5">
               {courses.map((course, index) => (
-                <li key={index}>{course.name}</li> // Assuming each course has a "name" property
+                <li key={index}>{course.name}</li> 
               ))}
             </ul>
           ) : (

@@ -1,72 +1,45 @@
-import React, { useState, useEffect } from "react"; // Import useState and useEffect from react
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import Home from "./pages/Home";
-import StudentDashboard from "./pages/StudentDashboard";
-import StaffDashboard from "./pages/StaffDashboard";
-import ErrorPage from "./pages/Errorpage"; // Import the ErrorPage component
-import JSXerror from "./pages/JSXerror";
-import Register from "./pages/Register";
-import CourseList from "./pages/CourseList";
-import Navbar from "./components/Navbar";
-import CourseDetails from "./pages/CourseDetails";
-import ProgramList from "./pages/ProgramList";
-import ProgramDetails from "./pages/ProgramDetails";
-import LevelsPage from "./pages/LevelsPage";
-import ProfessorList from "./pages/ProfessorList";
-import FinancialAidPage from "./pages/FinancialAidPage";
-import axios from "axios";
-
-const validateToken = async (token) => {
-  try {
-    const response = await axios.get("http://localhost:8080/api/auth/validate", {
-      headers: {
-        Authorization: `Bearer ${token}`, // Send the token in the Authorization header
-      },
-    });
-    console.log("Token validation successful:", response.data);
-    return true;
-  } catch (err) {
-    console.error("Token validation failed:", err);
-    return false;
-  }
-};
-
-const ProtectedRoute = ({ children }) => {
-  const [isValid, setIsValid] = useState(null); // State to track token validation
-  const token = localStorage.getItem("token");
-
-  useEffect(() => {
-    const checkToken = async () => {
-      if (!token) {
-        console.log("No token found. Redirecting to error page.");
-        setIsValid(false);
-        return;
-      }
-      const valid = await validateToken(token);
-      if (!valid) {
-        console.log("Invalid token. Clearing token from localStorage and redirecting.");
-        localStorage.removeItem("token"); // Clear the token
-      }
-      setIsValid(valid);
-    };
-
-    checkToken();
-  }, [token]);
-
-  if (isValid === null) {
-    // While validation is in progress, show a loading indicator
-    return <div>Loading...</div>;
-  }
-
-  if (!isValid) {
-    // Redirect to the error page if the token is invalid
-    return <Navigate to="/JSXerror" />;
-  }
-
-  return children;
-};
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import api from './api';
+import Layout from './components/Layout';
+import Home from './pages/Home';
+import StudentDashboard from './pages/StudentDashboard';
+import StaffDashboard from './pages/StaffDashboard';
+import ErrorPage from './pages/Errorpage';
+import Register from './pages/Register';
+import CourseList from './pages/CourseList';
+import CourseDetails from './pages/CourseDetails';
+import ProgramList from './pages/ProgramList';
+import ProgramDetails from './pages/ProgramDetails';
+import LevelsPage from './pages/LevelsPage';
+import ProfessorList from './pages/ProfessorList';
+import FinancialAidPage from './pages/FinancialAidPage';
 
 function App() {
+  const [token, setToken] = useState(() => localStorage.getItem('token'));
+  const [checking, setChecking] = useState(true);
+  const [valid, setValid] = useState(false);
+
+  useEffect(() => {
+    if (!token) {
+      setValid(false);
+      setChecking(false);
+      return;
+    }
+
+    api.get('/api/auth/validate', {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+      .then(() => setValid(true))
+      .catch(() => {
+        localStorage.removeItem('token');
+        setValid(false);
+      })
+      .finally(() => setChecking(false));
+  }, [token]);
+
+  if (checking) return <div>Checking authentication…</div>;
+
   return (
     <Router>
       <Navbar />
@@ -99,6 +72,51 @@ function App() {
         <Route path="/error" element={<ErrorPage />} /> {/* Error page route */}
         <Route path="*" element={<ErrorPage />} /> {/* Catch-all route */}
       </Routes>
+      <Layout>
+        <Routes>
+          {/* Only one Home route, passing onLogin */}
+          <Route path="/" element={<Home onLogin={setToken} />} />
+          <Route path="/register" element={<Register />} />
+          <Route
+            path="/student"
+            element={valid ? <StudentDashboard /> : <Navigate to="/" replace />}
+          />
+          <Route
+            path="/staff"
+            element={valid ? <StaffDashboard /> : <Navigate to="/" replace />}
+          />
+          <Route
+            path="/courses"
+            element={valid ? <CourseList /> : <Navigate to="/" replace />}
+          />
+          <Route
+            path="/courses/:id"
+            element={valid ? <CourseDetails /> : <Navigate to="/" replace />}
+          />
+          <Route
+            path="/programs"
+            element={valid ? <ProgramList /> : <Navigate to="/" replace />}
+          />
+          <Route
+            path="/programs/:id"
+            element={valid ? <ProgramDetails /> : <Navigate to="/" replace />}
+          />
+          <Route
+            path="/levels"
+            element={valid ? <LevelsPage /> : <Navigate to="/" replace />}
+          />
+          <Route
+            path="/professors"
+            element={valid ? <ProfessorList /> : <Navigate to="/" replace />}
+          />
+          <Route
+            path="/financial-aid"
+            element={valid ? <FinancialAidPage /> : <Navigate to="/" replace />}
+          />
+          <Route path="/error" element={<ErrorPage />} />
+          <Route path="*" element={<Navigate to="/error" replace />} />
+        </Routes>
+      </Layout>
     </Router>
   );
 }

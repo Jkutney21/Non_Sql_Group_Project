@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../api";
 
 export default function ProfessorList() {
   const [professors, setProfessors] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:8080/api/professors")
+    api.get("/api/professors")
       .then((res) => setProfessors(res.data))
       .catch((err) => console.error("Failed to fetch professors:", err));
   }, []);

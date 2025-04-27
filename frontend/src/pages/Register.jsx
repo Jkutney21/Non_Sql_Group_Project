@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from "../api";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -32,7 +32,7 @@ const Register = () => {
 
     try {
       // Send required fields to backend including capitalized role and program
-      await axios.post("http://localhost:8080/api/auth/register", {
+      await api.post("/api/auth/register", {
         email: formData.email,
         password: formData.password,
         role: formData.role.toUpperCase(),

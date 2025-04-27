@@ -3,22 +3,31 @@ import { Link } from "react-router-dom";
 
 export default function Navbar() {
   return (
-    <nav className="bg-blue-600 text-white px-6 py-3 shadow-md">
-      <div className="flex justify-between items-center">
-        <h1 className="text-lg font-bold">
-          <Link to="/">Navbar</Link>
-        </h1>
-        <div className="space-x-4">
-          <Link to="/student" className="hover:underline">Student Dashboard</Link>
-          <Link to="/staff" className="hover:underline">Staff Dashboard</Link>
-          <Link to="/courses" className="hover:underline">Courses</Link>
-          <Link to="/register" className="hover:underline">Register</Link>
-          <Link to="/programs" className="hover:underline">Programs</Link>
-          <Link to="/levels" className="hover:underline">Levels</Link>
-          <Link to="/professors" className="hover:underline">Professors</Link>
-          <Link to="/financial-aid" className="hover:underline">Financial Aid</Link>
+    <nav className="bg-white shadow sticky top-0 z-50">
+      <div className="max-w-6xl mx-auto flex items-center justify-between px-4 py-3">
+        <Link to="/" className="text-xl font-bold text-blue-600">
+          MyUniversity
+        </Link>
+        <div className="hidden md:flex space-x-6">
+          {[
+            ["Student", "/student"],
+            ["Staff", "/staff"],
+            ["Courses", "/courses"],
+            ["Programs", "/programs"],
+            ["Levels", "/levels"],
+            ["Professors", "/professors"],
+            ["Aid", "/financial-aid"],
+          ].map(([label, path]) => (
+            <Link
+              key={path}
+              to={path}
+              className="text-gray-600 hover:text-blue-600 transition"
+            >
+              {label}
+            </Link>
+          ))}
         </div>
       </div>
     </nav>
-  );
+);
 }

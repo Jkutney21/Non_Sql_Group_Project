@@ -14,61 +14,63 @@ import { jwtDecode } from "jwt-decode";
 import axios from "axios";
 import "./App.css";
 
-const validateToken = async (token: string) => {
-  try {
-    const response = await axios.get("http://localhost:8080/api/auth/validate", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    console.log("Token validation successful:", response.data);
-    return true;
-  } catch (err) {
-    console.error("Token validation failed:", err);
-    return false;
-  }
-};
 
-const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [isValid, setIsValid] = useState<boolean | null>(null);
-  const token = localStorage.getItem("token");
-  const role = localStorage.getItem("role"); // Retrieve the role from local storage
-
-  useEffect(() => {
-    const checkToken = async () => {
-      console.log("Checking local storage...");
-      console.log("Token from local storage:", token);
-      console.log("Role from local storage:", role);
-
-      if (!token) {
-        console.warn("No token found in local storage.");
-        setIsValid(false);
-        return;
-      }
-
-      const valid = await validateToken(token);
-      if (!valid) {
-        console.warn("Token validation failed. Clearing local storage.");
-        localStorage.removeItem("token");
-        localStorage.removeItem("role");
-      }
-      setIsValid(valid);
-    };
-
-    checkToken();
-  }, [token, role]);
-
-  if (isValid === null) {
-    return <div>Loading...</div>;
-  }
-
-  if (!isValid) {
-    return <Navigate to="/JSXerror" />;
-  }
-
-  return children;
-};
 function App() {
+  const validateToken = async (token: string) => {
+    try {
+      const response = await axios.get("http://localhost:8080/api/auth/validate", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log("Token validation successful:", response.data);
+      return true;
+    } catch (err) {
+      console.error("Token validation failed:", err);
+      return false;
+    }
+  };
+  
+  const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+    const [isValid, setIsValid] = useState<boolean | null>(null);
+    const token = localStorage.getItem("token");
+    const role = localStorage.getItem("role"); // Retrieve the role from local storage
+  
+    useEffect(() => {
+      const checkToken = async () => {
+        console.log("Checking local storage...");
+        console.log("Token from local storage:", token);
+        console.log("Role from local storage:", role);
+  
+        if (!token) {
+          console.warn("No token found in local storage.");
+          setIsValid(false);
+          return;
+        }
+  
+        const valid = await validateToken(token);
+        if (!valid) {
+          console.warn("Token validation failed. Clearing local storage.");
+          localStorage.removeItem("token");
+          localStorage.removeItem("role");
+        }
+        setIsValid(valid);
+        
+      };
+  
+      checkToken();
+    }, [token, role]);
+  
+    if (isValid === null) {
+      return <div>Loading...</div>;
+    }
+  
+    if (!isValid) {
+      return <Navigate to="/JSXerror" />;
+    }
+  
+    return children;
+  };
   const [role, setRole] = useState<string | null>(null);
 
   useEffect(() => {

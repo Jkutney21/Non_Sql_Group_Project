@@ -29,21 +29,17 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.configurationSource(request -> {
                     var corsConfig = new org.springframework.web.cors.CorsConfiguration();
-                    corsConfig.setAllowedOrigins(List.of("http://localhost:5173")); // Allow frontend origin
-                    corsConfig.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS")); // Allow HTTP
+                    corsConfig.setAllowedOrigins(List.of("*")); // Allow all origins
+                    corsConfig.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS")); // Allow all HTTP
                                                                                                       // methods
-                    corsConfig.setAllowedHeaders(List.of("Authorization", "Content-Type")); // Allow headers
+                    corsConfig.setAllowedHeaders(List.of("*")); // Allow all headers
                     corsConfig.setExposedHeaders(List.of("Authorization")); // Expose headers
                     return corsConfig;
                 }))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/course/**").permitAll()
-                        .requestMatchers("/api/course/*").permitAll()
-                        .requestMatchers("/api/aid/**").permitAll()
-                        .requestMatchers("/api/aid/*").permitAll()
-                        .requestMatchers("/api/auth/**").permitAll()
-                        .anyRequest().authenticated());
+                        .anyRequest().permitAll() // Allow all requests
+                );
 
         return http.build();
     }

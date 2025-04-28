@@ -1,8 +1,11 @@
 .student-fin-container {
+    margin-top: 40px; /* Space from the top of the page */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    min-height: 80vh; /* Ensure the container takes up the full height */
     padding: 20px;
-    background-color: #f9f9f9;
-    min-height: 80vh;
-  }
+    background-color: transparent; /* Transparent background */
+}
   
   .student-fin-title {
     font-size: 24px;
@@ -12,6 +15,11 @@
   
   .student-fin-error {
     color: red;
+    margin-bottom: 20px;
+  }
+  
+  .student-fin-success {
+    color: green;
     margin-bottom: 20px;
   }
   
@@ -42,4 +50,65 @@
   .student-fin-no-data {
     font-size: 16px;
     color: #555;
+  }
+  
+  .student-fin-apply-button {
+    margin: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .student-fin-apply-button:hover {
+    background-color: #0056b3;
+  }
+  
+  
+.student-fin-form-box {
+    margin-top: 20px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+    max-width: 200px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+  
+  .student-fin-form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .student-fin-label {
+    margin-bottom: 8px;
+    font-size: 16px;
+  }
+  
+  .student-fin-input {
+    padding: 8px;
+    font-size: 16px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  .student-fin-submit-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #28a745;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .student-fin-submit-button:hover {
+    background-color: #218838;
   }

@@ -22,7 +22,7 @@ import com.group.Backend.Service.CourseService;
 
 @RestController
 @RequestMapping("/api/courses")
-@CrossOrigin(origins = "http://localhost:5173") // Allow requests from the frontend
+@CrossOrigin(origins = "http://172.172.215.186:5173") // Allow requests from the frontend
 public class CourseController {
 
     private static final Logger logger = LoggerFactory.getLogger(CourseController.class);

@@ -68,7 +68,7 @@ const Register = () => {
     setError('');
 
     try {
-      await axios.post('http://localhost:8080/api/auth/register', {
+      await axios.post('http://172.172.215.186:8080/api/auth/register', {
         email: formData.email,
         password: formData.password,
         role: formData.role.toUpperCase(),

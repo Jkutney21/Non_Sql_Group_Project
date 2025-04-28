@@ -32,7 +32,7 @@ docker exec -it mongo mongosh
 # Endpoints for Login and Registration
 
 ## Register a New User
-**POST** `http://localhost:8080/api/auth/register`
+**POST** `http://172.172.215.186:8080/api/auth/register`
 
 **Request Body:**
 ```json
@@ -48,7 +48,7 @@ docker exec -it mongo mongosh
 ---
 
 ## Login
-**POST** `http://localhost:8080/api/auth/login`
+**POST** `http://172.172.215.186:8080/api/auth/login`
 
 **Request Body:**
 ```json
@@ -61,7 +61,7 @@ docker exec -it mongo mongosh
 ---
 
 ## Validate Token
-**GET** `http://localhost:8080/api/auth/validate`
+**GET** `http://172.172.215.186:8080/api/auth/validate`
 
 **Headers:**
 - Authorization: `Bearer {yourToken}`
@@ -114,12 +114,12 @@ docker exec -it mongo mongosh
 # Endpoints for Financial Aid
 
 ## Get Financial Aid by User ID
-**GET** `http://localhost:8080/api/aid/user/{USERID}`
+**GET** `http://172.172.215.186:8080/api/aid/user/{USERID}`
 
 ---
 
 ## Update Financial Aid Type
-**PUT** `http://localhost:8080/api/aid/{id}/type`
+**PUT** `http://172.172.215.186:8080/api/aid/{id}/type`
 
 **Request Body Example:**
 ```json
@@ -131,7 +131,7 @@ docker exec -it mongo mongosh
 ---
 
 ## Get All Financial Aid Records
-**GET** `http://localhost:8080/api/aid`
+**GET** `http://172.172.215.186:8080/api/aid`
 
 ---
 

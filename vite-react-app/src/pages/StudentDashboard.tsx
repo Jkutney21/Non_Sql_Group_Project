@@ -34,7 +34,7 @@ export default function StudentDashboard() {
         }
 
         const response = await fetch(
-          `http://localhost:8080/api/courses/department?department=${encodeURIComponent(
+          `http://172.172.215.186:8080/api/courses/department?department=${encodeURIComponent(
             selectedProgram
           )}`,
           {

@@ -19,7 +19,7 @@ import com.group.Backend.Domain.FinancialAid;
 import com.group.Backend.Service.FinancialAidService;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = "http://172.172.215.186:5173")
 @RequestMapping("/api/aid")
 public class FinancialAidController {
 

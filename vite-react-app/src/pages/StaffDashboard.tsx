@@ -25,7 +25,7 @@ export default function StaffDashboard() {
 
       try {
         
-        const response = await fetch(`http://localhost:8080/api/courses/email/${email}`);
+        const response = await fetch(`http://172.172.215.186:8080/api/courses/email/${email}`);
 
         if (!response.ok) {
           throw new Error("Failed to fetch courses.");

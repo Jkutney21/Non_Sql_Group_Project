@@ -5,7 +5,7 @@ package com.group.Backend.Config;
 // @Override
 // public void addCorsMappings(CorsRegistry registry) {
 // registry.addMapping("/**")
-// .allowedOriginPatterns("http://localhost:*")
+// .allowedOriginPatterns("http://172.172.215.186:*")
 // .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
 // .allowedHeaders("*")
 // .allowCredentials(true);

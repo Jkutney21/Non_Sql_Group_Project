@@ -1,22 +1,25 @@
 # Use a base image for Node.js
-FROM node:16
+FROM node:18 AS build
 
 # Set the working directory
 WORKDIR /app
 
-# Copy package.json and install dependencies
-COPY package.json .
+# Copy package.json and package-lock.json (if available) and install dependencies
+COPY package.json package-lock.json ./
 RUN npm install
 
 # Copy the rest of the application
 COPY . .
 
 # Build the application
-RUN npm run vite build
+RUN npm run build
 
 # Use a lightweight web server to serve the frontend
 FROM nginx:alpine
-COPY --from=0 /app/build /usr/share/nginx/html
+COPY --from=build /app/dist /usr/share/nginx/html
 
 # Expose the application port
-EXPOSE 443
+EXPOSE 80
+
+# Start Nginx
+CMD ["nginx", "-g", "daemon off;"]

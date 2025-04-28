@@ -20,10 +20,12 @@
   "devDependencies": {
     "@eslint/js": "^9.22.0",
     "@types/jwt-decode": "^2.2.1",
+    "@types/node": "^22.15.2",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
     "@types/react-router-dom": "^5.3.3",
     "@vitejs/plugin-react": "^4.3.4",
+    "crypto-browserify": "^3.12.1",
     "eslint": "^9.22.0",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.19",

@@ -1,5 +1,3 @@
-
-
 services:
   mongo:
     image: mongo:6
@@ -18,14 +16,14 @@ services:
     depends_on:
       - mongo
     environment:
-      - SPRING_DATA_MONGODB_URI=mongodb://localhost:27017/project
+      - SPRING_DATA_MONGODB_URI=mongodb://mongo:27017/project # Use the container name 'mongo' for the URI
 
   frontend:
     build:
-      context: ./frontend
+      context: ./vite-react-app
     container_name: frontend
     ports:
-      - "3000:80"
+      - "5173:80" # Map port 80 in the container to port 5173 on the host
     depends_on:
       - backend
 

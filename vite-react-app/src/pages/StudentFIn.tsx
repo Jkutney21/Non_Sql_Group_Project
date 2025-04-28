@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import "./StudentFin.css"; // Import the CSS file
+import "./StudentFIn.css"; // Import the CSS file
 
 interface FinancialAid {
   id: string;

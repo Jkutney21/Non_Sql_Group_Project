@@ -8,7 +8,7 @@ import StaffDashboard from "./pages/StaffDashboard";
 import ErrorPage from "./pages/Errorpage";
 import JSXerror from "./pages/JSXerror";
 import Footer from "./components/footer";
-import StudentFin from "./pages/StudentFin";
+import StudentFin from "./pages/StudentFIn";
 import StaffFin from "./pages/StaffFin";
 
 import HeaderBasic from "./components/header"; // Basic header for unauthenticated users

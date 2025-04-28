@@ -20,4 +20,11 @@ if (!globalThis.crypto) {
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
+  server: {
+    host: "0.0.0.0", // Bind to all network interfaces
+    port: 5173,      // Ensure this matches the port in your Docker setup
+    hmr: {
+      clientPort: 5173, // Hot Module Replacement client port
+    },
+  },
 })

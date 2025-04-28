@@ -39,7 +39,8 @@ public class CourseController {
     }
 
     @GetMapping("/department")
-    public List<Course> getCoursesByDepartment(@RequestParam(value = "department", required = false) String department) {
+    public List<Course> getCoursesByDepartment(
+            @RequestParam(value = "department", required = false) String department) {
         try {
             if (department == null || department.isEmpty()) {
                 logger.error("Department is null or empty");
@@ -52,7 +53,8 @@ public class CourseController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid argument provided");
         } catch (Exception e) {
             logger.error("Error occurred while fetching courses by department: {}", e.getMessage(), e);
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "An error occurred while processing the request");
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,
+                    "An error occurred while processing the request");
         }
     }
 
@@ -82,5 +84,24 @@ public class CourseController {
         courseService.deleteCourse(id);
         logger.info("Course deleted successfully with ID: {}", id);
         return "Course deleted successfully!";
+    }
+
+    @GetMapping("/email/{email}")
+    public List<Course> getCoursesByEmail(@PathVariable("email") String email) {
+        logger.info("Received request to get courses by email: {}", email);
+        try {
+            List<Course> courses = courseService.getCoursesByEmail(email);
+            if (courses.isEmpty()) {
+                logger.warn("No courses found for email: {}", email);
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No courses found for the provided email");
+            }
+            logger.info("Courses retrieved for email {}: {}", email, courses);
+            return courses;
+        } catch (Exception e) {
+            logger.error("Error occurred while retrieving courses for email: {}", email, e);
+            throw new ResponseStatusException(
+                    HttpStatus.INTERNAL_SERVER_ERROR,
+                    "An error occurred while processing the request");
+        }
     }
 }

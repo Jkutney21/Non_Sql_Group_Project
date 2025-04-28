@@ -9,6 +9,7 @@ import ErrorPage from "./pages/Errorpage";
 import JSXerror from "./pages/JSXerror";
 import Footer from "./components/footer";
 import StudentFin from "./pages/StudentFIn";
+import StaffFin from "./pages/StaffFin";
 
 import HeaderBasic from "./components/header"; // Basic header for unauthenticated users
 import axios from "axios";
@@ -33,23 +34,16 @@ function App() {
   const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [isValid, setIsValid] = useState<boolean | null>(null);
     const token = localStorage.getItem("token");
-    const role = localStorage.getItem("role");
 
     useEffect(() => {
       const checkToken = async () => {
-        console.log("Checking local storage...");
-        console.log("Token from local storage:", token);
-        console.log("Role from local storage:", role);
-
         if (!token) {
-          console.warn("No token found in local storage.");
           setIsValid(false);
           return;
         }
 
         const valid = await validateToken(token);
         if (!valid) {
-          console.warn("Token validation failed. Clearing local storage.");
           localStorage.removeItem("token");
           localStorage.removeItem("role");
         }
@@ -57,46 +51,41 @@ function App() {
       };
 
       checkToken();
-    }, [token, role]);
+    }, [token]);
 
     if (isValid === null) {
       return <div>Loading...</div>;
     }
 
     if (!isValid) {
-      localStorage.removeItem("token");
-      localStorage.removeItem("role");
       return <Navigate to="/JSXerror" />;
     }
 
     return <>{children}</>;
   };
 
-  const [role, setRole] = useState<string | null>(null);
-
-  useEffect(() => {
+  const getRole = () => {
     const storedRole = localStorage.getItem("role");
-    console.log("Role from localStorage:", storedRole);
-    setRole(storedRole ? storedRole.toLowerCase() : null);
-  }, []);
+    return storedRole ? storedRole.toLowerCase() : null;
+  };
 
   return (
     <Router>
-      
       <Routes>
-        <Route path="/" element={
-          <>
-          <HeaderBasic role={null} /> 
-          <Home />
-          </>
-        
-      
-      } />
+        <Route
+          path="/"
+          element={
+            <>
+              <HeaderBasic role={null} />
+              <Home />
+            </>
+          }
+        />
         <Route
           path="/student"
           element={
             <ProtectedRoute>
-              <HeaderBasic role={role} />
+              <HeaderBasic role={getRole()} />
               <StudentDashboard />
             </ProtectedRoute>
           }
@@ -105,7 +94,7 @@ function App() {
           path="/staff"
           element={
             <ProtectedRoute>
-              <HeaderBasic role={role} />
+              <HeaderBasic role={getRole()} />
               <StaffDashboard />
             </ProtectedRoute>
           }
@@ -114,27 +103,43 @@ function App() {
           path="/financialAid"
           element={
             <ProtectedRoute>
-              <HeaderBasic role={role} />
+              <HeaderBasic role={getRole()} />
               <StudentFin />
             </ProtectedRoute>
           }
         />
-        <Route path="/login" element={<>
-        <HeaderBasic role={null} />
-        <Login />
-        </>} 
+        <Route
+          path="/financial_Aid"
+          element={
+            <ProtectedRoute>
+              <HeaderBasic role={getRole()} />
+              <StaffFin />
+            </ProtectedRoute>
+          }
         />
-        <Route path="/register" element={<>
-        <HeaderBasic role={null} />
-        <Register />
-        
-        </>
-        } />
+        <Route
+          path="/login"
+          element={
+            <>
+              <HeaderBasic role={null} />
+              <Login />
+            </>
+          }
+        />
+        <Route
+          path="/register"
+          element={
+            <>
+              <HeaderBasic role={null} />
+              <Register />
+            </>
+          }
+        />
         <Route
           path="/JSXerror"
           element={
             <>
-              <HeaderBasic role={null} /> {/* Render Header with role=null */}
+              <HeaderBasic role={null} />
               <JSXerror />
             </>
           }

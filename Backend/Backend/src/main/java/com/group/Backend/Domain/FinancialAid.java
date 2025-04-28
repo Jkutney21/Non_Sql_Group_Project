@@ -8,6 +8,7 @@ public class FinancialAid {
 
     @Id
     private String id;
+    private String email; // Field for email
     private String userId;
     private String type;
     private double amount;
@@ -19,6 +20,14 @@ public class FinancialAid {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getEmail() { // Getter for email
+        return email;
+    }
+
+    public void setEmail(String email) { // Setter for email
+        this.email = email;
     }
 
     public String getUserId() {

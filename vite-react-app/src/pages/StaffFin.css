@@ -1,0 +1,54 @@
+.staff-fin-container {
+    margin-top: 40px;
+    padding: 20px;
+    background-color: transparent;
+    min-height: 80vh;
+  }
+  
+  .staff-fin-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .staff-fin-error {
+    color: red;
+    margin-bottom: 20px;
+  }
+  
+  .staff-fin-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  
+  .staff-fin-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .staff-fin-card-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .staff-fin-card-item {
+    margin-bottom: 8px;
+  }
+  
+  .staff-fin-actions {
+    margin-top: 0px;
+  }
+  
+  .staff-fin-type-dropdown {
+    
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+  }

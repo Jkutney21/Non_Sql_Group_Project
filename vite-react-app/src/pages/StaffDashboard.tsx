@@ -1,20 +1,81 @@
+import { useEffect, useState } from "react";
+import "./StaffDashboard.css"; // Import the CSS file
+
+interface Course {
+  courseId: string;
+  courseName: string;
+  email: string;
+  program: string;
+  time: string;
+  level: string;
+}
+
 export default function StaffDashboard() {
-    return (
-      <div className="p-6 bg-gray-100 min-h-screen">
-        <h1 className="text-3xl font-bold mb-4">Staff Dashboard</h1>
-        <p>Welcome, staff! Here you’ll be able to manage courses, programs, and students.</p>
-  
-        <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="bg-white p-4 rounded shadow">
-            <h2 className="text-xl font-semibold mb-2">Manage Courses</h2>
-            <button className="mt-2 px-4 py-2 bg-blue-500 text-white rounded">Add New Course</button>
-          </div>
-  
-          <div className="bg-white p-4 rounded shadow">
-            <h2 className="text-xl font-semibold mb-2">Manage Students</h2>
-            <button className="mt-2 px-4 py-2 bg-green-600 text-white rounded">View All Students</button>
-          </div>
-        </div>
+  const [courses, setCourses] = useState<Course[]>([]);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    const fetchCourses = async () => {
+      const email = localStorage.getItem("email"); // Get the email from localStorage
+
+      if (!email) {
+        setError("Email not found in local storage.");
+        return;
+      }
+
+      try {
+        
+        const response = await fetch(`http://localhost:8080/api/courses/email/${email}`);
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch courses.");
+        }
+
+        const data = await response.json();
+        setCourses(data);
+      } catch (err) {
+        console.error("Error fetching courses:", err);
+        setError(err instanceof Error ? err.message : "An error occurred.");
+      }
+    };
+
+    fetchCourses();
+  }, []);
+
+  return (
+    <div className="staff-dashboard-container">
+      <h1 className="staff-dashboard-title">Staff Dashboard</h1>
+      <p className="staff-dashboard-welcome">
+        Welcome, staff! Here are the courses you are managing:
+      </p>
+
+      {error && <p className="staff-dashboard-error">{error}</p>}
+
+      {courses.length > 0 ? (
+  <div
+    className="staff-dashboard-courses"
+    style={{
+      display: "grid",
+      gap: "20px",
+      gridTemplateColumns:
+        courses.length < 3
+          ? `repeat(${courses.length}, minmax(300px, 1fr))` // Use the number of courses if less than 3
+          : `repeat(auto-fit, minmax(300px, 1fr))`, // Dynamically adjust columns for 3 or more courses
+    }}
+  >
+    {courses.map((course) => (
+      <div key={course.courseId} className="staff-dashboard-course-card">
+        <h2 className="staff-dashboard-course-title">{course.courseName}</h2>
+        <p><strong>Course ID:</strong> {course.courseId}</p>
+        <p><strong>Program:</strong> {course.program}</p>
+        <p><strong>Time:</strong> {course.time}</p>
+        <p><strong>Level:</strong> {course.level}</p>
       </div>
-    );
-  }  
+    ))}
+  </div>
+) : (
+  !error && <p className="staff-dashboard-no-courses">No courses found.</p>
+)}
+    </div>
+  );
+}

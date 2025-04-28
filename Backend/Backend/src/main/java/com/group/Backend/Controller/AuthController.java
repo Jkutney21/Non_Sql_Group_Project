@@ -65,8 +65,7 @@ public class AuthController {
                     "token", token,
                     "program", user.getProgram(), // Replace expiration with program
                     "role", user.getRole(),
-                    "id", user.getUserId() 
-                    ));
+                    "id", user.getUserId()));
         } catch (AuthenticationException e) {
             System.out.println("Authentication failed: " + e.getMessage());
             return ResponseEntity.status(401).body("Invalid credentials");
@@ -75,8 +74,25 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<User> register(@Valid @RequestBody RegisterRequest request) {
-        User user = registrationService.register(request);
-        return ResponseEntity.ok(user);
+        try {
+            // Log the incoming request
+            System.out.println("Received registration request: " + request);
+
+            // Call the registration service
+            User user = registrationService.register(request);
+
+            // Log the successful registration
+            System.out.println("User registered successfully: " + user);
+
+            return ResponseEntity.ok(user);
+        } catch (Exception e) {
+            // Log the exception
+            System.err.println("Error occurred during registration: " + e.getMessage());
+            e.printStackTrace();
+
+            // Return an error response
+            return ResponseEntity.status(500).body(null);
+        }
     }
 
     @GetMapping("/validate")

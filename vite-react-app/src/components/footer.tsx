@@ -21,7 +21,7 @@ export default function Footer() {
             </svg>
           </a>
           <span className="footer-company-text">
-            © 2025 Company, Inc
+            © 2025 Non-Sql Project
           </span>
         </div>
 

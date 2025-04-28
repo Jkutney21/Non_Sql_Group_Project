@@ -22,4 +22,16 @@ public class FinancialAidService {
     public FinancialAid addAid(FinancialAid aid) {
         return repo.save(aid);
     }
+
+    public List<FinancialAid> getAidByType(String type) {
+        return repo.findByType(type);
+    }
+    
+    public FinancialAid getAidById(String id) {
+        return repo.findById(id).orElse(null);
+    }
+
+    public FinancialAid updateAid(FinancialAid aid) {
+        return repo.save(aid);
+    }
 }

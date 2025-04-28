@@ -7,41 +7,43 @@ import "./login.css"; // Import the CSS file
 export default function LoginPage() {
   const [role, setRole] = useState("student");
   const [error, setError] = useState("");
-  const [email, setEmail] = useState("testuser@example.com");
-  const [password, setPassword] = useState("yourSecurePassword");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
   const navigate = useNavigate();
 
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
-  
+
     try {
       const response = await axios.post("http://localhost:8080/api/auth/login", {
         email: email,
         password: password,
       });
-  
+
       console.log("Response received from server:", response.data);
-  
+
       const token = response.data.token;
       const serverRole = response.data.role.toLowerCase(); // Use role directly from the response
       const userId = response.data.id; // Extract the user ID
       const userProgram = response.data.program; // Extract the program
-  
+
       if (!token || !serverRole || !userId || !userProgram) {
         throw new Error("Invalid response structure from server.");
       }
-  
-      // Save token, role, id, and program in local storage
+
+      // Save token, role, id, program, and email in local storage
       localStorage.setItem("token", token);
       localStorage.setItem("role", serverRole);
       localStorage.setItem("id", userId);
       localStorage.setItem("program", userProgram);
-  
+      localStorage.setItem("email", email); // Save the email
+
       console.log("Token saved:", localStorage.getItem("token"));
       console.log("Role saved:", localStorage.getItem("role"));
       console.log("ID saved:", localStorage.getItem("id"));
       console.log("Program saved:", localStorage.getItem("program"));
-  
+      console.log("Email saved:", localStorage.getItem("email"));
+
       if (serverRole === "staff") {
         console.log("Navigating to /staff");
         navigate("/staff");

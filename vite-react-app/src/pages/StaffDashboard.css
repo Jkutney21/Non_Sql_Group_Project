@@ -1,0 +1,51 @@
+.staff-dashboard-container {
+    margin-top: 50px;
+    padding: 20px;
+    background-color: transparent;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center; /* Center vertically */
+    min-height: 100vh;
+  }
+  
+  .staff-dashboard-title {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .staff-dashboard-welcome {
+    font-size: 16px;
+    margin-bottom: 20px;
+  }
+  
+  .staff-dashboard-error {
+    color: red;
+    margin-bottom: 20px;
+  }
+  
+  .staff-dashboard-courses {
+    
+    display: grid;
+    
+    gap: 20px;
+  }
+  
+  .staff-dashboard-course-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .staff-dashboard-course-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .staff-dashboard-no-courses {
+    font-size: 16px;
+    color: #555;
+  }

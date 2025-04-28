@@ -35,4 +35,10 @@ public class CourseService {
         return courseRepository.findByProgramContainingIgnoreCase(department); // Retrieve courses by department
     }
 
+    public List<Course> getCoursesByEmail(String email) {
+        List<Course> courses = courseRepository.findByEmail(email);
+        System.out.println("Courses found for email " + email + ": " + courses);
+        return courses;
+    }
+
 }

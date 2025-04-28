@@ -55,7 +55,7 @@ export default function StudentFin() {
     const aidRequest = {
       userId,
       amount,
-      type: "pending",
+      type: "Pending",
       date: new Date().toISOString().split("T")[0], // Format date as YYYY-MM-DD
     };
 

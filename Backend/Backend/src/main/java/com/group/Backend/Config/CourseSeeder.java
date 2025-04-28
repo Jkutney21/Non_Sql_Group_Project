@@ -1,5 +1,6 @@
 package com.group.Backend.Config;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.IntStream;
@@ -37,7 +38,10 @@ public class CourseSeeder implements CommandLineRunner {
     @Override
     public void run(String... args) {
         if (courseRepository.count() == 0) {
-            logger.info("Starting the seeding process...");
+            logger.info("Starting the course seeding process...");
+
+            // Add default staff member
+            User defaultStaff = addDefaultStaffMember();
 
             List<List<String>> collegesPrograms = List.of(
                     List.of("Communication Studies", "English", "History", "Sociology", "Political Science",
@@ -72,9 +76,19 @@ public class CourseSeeder implements CommandLineRunner {
                             })
                             .toList();
 
-                    // Assign courses to those teachers randomly (2–6 per)
+                    // Add the default staff member to the list of teachers
+                    programTeachers = new ArrayList<>(programTeachers);
+                    programTeachers.add(defaultStaff);
+
+                    // Assign courses to those teachers randomly (4–5 per teacher)
                     for (User teacher : programTeachers) {
-                        int teacherCourses = 2 + random.nextInt(5); // 2 to 6
+                        if (!teacher.getProgram().equalsIgnoreCase(program)) {
+                            logger.warn("Skipping teacher {} for program {} as they are not part of this program.",
+                                    teacher.getEmail(), program);
+                            continue; // Skip teachers not in the program
+                        }
+
+                        int teacherCourses = 4 + random.nextInt(2); // 4 to 5 courses
                         for (int i = 0; i < teacherCourses && totalCourses > 0; i++, totalCourses--) {
                             try {
                                 String courseId = generateCourseId(program);
@@ -95,10 +109,27 @@ public class CourseSeeder implements CommandLineRunner {
                 }
             }
 
-            logger.info("Seeding process completed.");
+            logger.info("Course seeding process completed.");
         } else {
             logger.info("Courses already exist in the database. Skipping seeding process.");
         }
+    }
+
+    private User addDefaultStaffMember() {
+        String email = "staff@example.com";
+        String password = passwordEncoder.encode("password123");
+        String role = "STAFF";
+        String program = "computer science";
+
+        User staff = userRepository.findByEmail(email);
+        if (staff == null) {
+            staff = new User(email, password, role, program);
+            userRepository.save(staff);
+            logger.info("Default staff member created: {}", email);
+        } else {
+            logger.info("Default staff member already exists: {}", email);
+        }
+        return staff;
     }
 
     private String generateCourseId(String program) {
@@ -108,8 +139,28 @@ public class CourseSeeder implements CommandLineRunner {
     }
 
     private String generateCourseName(String program) {
-        String[] courseTopics = { "Introduction to", "Advanced", "Fundamentals of", "Principles of",
-                "Applications of" };
+        String[] courseTopics = {
+                "Introduction to",
+                "Advanced",
+                "Fundamentals of",
+                "Principles of",
+                "Applications of",
+                "Foundations of",
+                "Essentials of",
+                "Theory of",
+                "Concepts of",
+                "Basics of",
+                "Perspectives on",
+                "Overview of",
+                "Topics in",
+                "Survey of",
+                "Techniques in",
+                "Strategies for",
+                "Exploration of",
+                "Methods in",
+                "Practices in",
+                "Contemporary Issues in"
+        };
         return courseTopics[random.nextInt(courseTopics.length)] + " " + program;
     }
 

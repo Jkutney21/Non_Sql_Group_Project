@@ -12,7 +12,7 @@ RUN npm install
 COPY . .
 
 # Build the application
-RUN npm run build
+RUN npm run vite build
 
 # Use a lightweight web server to serve the frontend
 FROM nginx:alpine

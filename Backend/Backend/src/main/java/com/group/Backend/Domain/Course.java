@@ -3,26 +3,26 @@ package com.group.Backend.Domain;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "courses") // Correctly applied at the class level
+@Document(collection = "courses")
 public class Course {
 
     @Id
     private String courseId;
     private String courseName;
-    private String teacherName;
+    private String email; // Add this field for teacher's email
     private String program;
     private String time;
     private String level;
 
-    // Default constructor (required by Spring Data)
+    // Default constructor
     public Course() {
     }
 
     // Constructor with all fields
-    public Course(String courseId, String courseName, String teacherName, String program, String time, String level) {
+    public Course(String courseId, String courseName, String email, String program, String time, String level) {
         this.courseId = courseId;
         this.courseName = courseName;
-        this.teacherName = teacherName;
+        this.email = email;
         this.program = program;
         this.time = time;
         this.level = level;
@@ -45,12 +45,12 @@ public class Course {
         this.courseName = courseName;
     }
 
-    public String getTeacherName() {
-        return teacherName;
+    public String getEmail() {
+        return email;
     }
 
-    public void setTeacherName(String teacherName) {
-        this.teacherName = teacherName;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getProgram() {

@@ -46,7 +46,7 @@ export default function Header({ role }: { role: string | null }) {
                 </Link>
               </li>
               <li className="header-nav-item">
-                <Link className="header-nav-link" to="/financialAid">
+                <Link className="header-nav-link" to="/financial_Aid">
                   Financial Aid
                 </Link>
               </li>

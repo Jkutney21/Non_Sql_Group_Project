@@ -7,13 +7,14 @@
 }
 
 .register-page {
-    min-height: 80vh;
+    min-height: 40vh;
     background-color: transparent;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     padding: 24px;
+    background: linear-gradient(135deg, #f9fafb, #e5e7eb); /* Added gradient */
 }
 
 .register-container {
@@ -22,11 +23,12 @@
     background-color: #ffffff;
     padding: 32px 64px; /* Reduced top and bottom padding to 32px, left and right remain 64px */
     border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Deeper shadow */
     display: flex;
     flex-direction: column;
     align-items: center; /* Center all content horizontally */
     justify-content: center; /* Center all content vertically */
+    border: 2px solid #868686; /* Added border */
 }
 
 .register-title {
@@ -34,6 +36,20 @@
     font-weight: bold;
     top: 100%;
     text-align: center;
+    color: #2563eb; /* Blue color */
+    margin-bottom: 16px; /* Added spacing */
+    position: relative; /* For underline */
+}
+
+.register-title::after {
+    content: '';
+    width: 60px;
+    height: 3px;
+    background: #2563eb; /* Underline style */
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .register-form {
@@ -63,6 +79,7 @@
     font-size: 1rem;
     display: block; /* Ensure it's treated as a block element */
     margin: 0 auto; /* Center horizontally */
+    transition: border-color 0.2s ease, box-shadow 0.2s ease; /* Added transition */
 }
 .register-input {
     width: 100%;
@@ -71,6 +88,7 @@
     border: 1px solid #d1d5db;
     border-radius: 4px;
     font-size: 1rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease; /* Added transition */
 }
 
 .register-program-field {
@@ -100,6 +118,7 @@
     margin-top: 4px;
     padding: 0;
     list-style: none;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* Added dropdown shadow */
 }
 
 .program-suggestion-item {
@@ -131,10 +150,12 @@
     font-weight: bold;
     cursor: pointer;
     text-align: center; /* Center text inside the button */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Added transitions */
 }
 
 .register-button:hover {
     background-color: #1d4ed8;
+    transform: translateY(-2px); /* Added lift */
 }
 
 .register-footer {

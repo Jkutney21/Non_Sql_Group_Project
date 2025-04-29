@@ -35,6 +35,8 @@
 
 .card {
   padding: 2em;
+  border-radius: 8px;               /* Added rounded corners for cards */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Added subtle shadow on cards */
 }
 
 .read-the-docs {

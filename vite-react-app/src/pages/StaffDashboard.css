@@ -4,19 +4,23 @@
     background-color: transparent;
     align-items: center;
     flex-direction: column;
+    display: flex; /* Added flex for vertical centering */
     justify-content: center; /* Center vertically */
     min-height: 100vh;
+    background: linear-gradient(to bottom, #f1f5f9, #e2e8f0); /* Added gradient */
   }
   
   .staff-dashboard-title {
     font-size: 28px;
     font-weight: bold;
     margin-bottom: 10px;
+    color: #1e3a8a; /* Added color */
   }
   
   .staff-dashboard-welcome {
     font-size: 16px;
     margin-bottom: 20px;
+    color: #475569; /* Added gray tone */
   }
   
   .staff-dashboard-error {
@@ -25,10 +29,9 @@
   }
   
   .staff-dashboard-courses {
-    
     display: grid;
-    
     gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Added responsive cols */
   }
   
   .staff-dashboard-course-card {
@@ -36,13 +39,20 @@
     border: 1px solid #ddd;
     border-radius: 8px;
     padding: 16px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Deeper shadow */
+    transition: transform 0.2s ease, box-shadow 0.2s ease; /* Added hover effects */
+  }
+
+  .staff-dashboard-course-card:hover {
+    transform: translateY(-4px); /* Lift on hover */
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
   }
   
   .staff-dashboard-course-title {
     font-size: 20px;
     font-weight: bold;
     margin-bottom: 10px;
+    color: #1f2937; /* Dark text */
   }
   
   .staff-dashboard-no-courses {

@@ -5,12 +5,16 @@
     min-height: 80vh; /* Ensure the container takes up the full height */
     padding: 20px;
     background-color: transparent; /* Transparent background */
+    background: linear-gradient(135deg, #eef2f7, #d4dae6); /* Added gradient */
+    display: flex; /* Center content */
+    flex-direction: column;
 }
   
   .student-fin-title {
     font-size: 24px;
     font-weight: bold;
     margin-bottom: 20px;
+    color: #065f46; /* Added color */
   }
   
   .student-fin-error {
@@ -25,7 +29,7 @@
   
   .student-fin-list {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); /* Responsive cols */
     gap: 20px;
   }
   
@@ -34,7 +38,13 @@
     border: 1px solid #ddd;
     border-radius: 8px;
     padding: 16px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Deeper shadow */
+    transition: transform 0.2s ease, box-shadow 0.2s ease; /* Hover effects */
+  }
+
+  .student-fin-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
   }
   
   .student-fin-card-list {
@@ -61,11 +71,12 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Added transitions */
   }
   
   .student-fin-apply-button:hover {
-    background-color: #0056b3;
+    background: linear-gradient(45deg, #1d4ed8, #2563eb);
+    transform: translateY(-2px); /* Added lift */
   }
   
   
@@ -77,12 +88,13 @@
     border-radius: 8px;
     background-color: #fff;
     max-width: 200px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Deeper shadow */
 }
   
   .student-fin-form {
     display: flex;
     flex-direction: column;
+    gap: 12px; /* Added gap */
   }
   
   .student-fin-label {
@@ -96,6 +108,12 @@
     margin-bottom: 10px;
     border: 1px solid #ddd;
     border-radius: 4px;
+    transition: border-color 0.2s ease; /* Added transition */
+  }
+
+  .student-fin-input:focus {
+    border-color: #065f46; /* Focus border */
+    outline: none;
   }
   
   .student-fin-submit-button {
@@ -106,9 +124,10 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Added transitions */
   }
   
   .student-fin-submit-button:hover {
     background-color: #218838;
+    transform: translateY(-2px); /* Added lift */
   }

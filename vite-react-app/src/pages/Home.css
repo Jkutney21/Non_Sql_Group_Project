@@ -1,13 +1,16 @@
 /* Container styles */
 .home-container {
     width: auto; /* Full width */
-    min-height: 80vh; /* Full viewport height */
+    min-height: 40vh; /* Full viewport height */
     background-color: transparent; /* Light gray background */
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     padding: 24px;
+    gap: 1rem; /* Added spacing between children */
+    background: linear-gradient(135deg, #f0f4f8, #d9e2ec); /* Added gentle gradient */
+    border-radius: 12px; /* Added rounded container */
   }
   
   /* Title styles */
@@ -16,6 +19,8 @@
     font-weight: bold;
     margin-bottom: 16px; /* Equivalent to mb-4 */
     color: #2563eb; /* Blue color */
+    text-align: center; /* Added center alignment */
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1); /* Added subtle text shadow */
   }
   
   /* Description styles */
@@ -23,6 +28,8 @@
     font-size: 1.125rem; /* Equivalent to text-lg */
     color: #4b5563; /* Gray color */
     margin-bottom: 24px; /* Equivalent to mb-6 */
+    max-width: 600px; /* Added line-length control */
+    text-align: center; /* Added centering */
   }
   
   /* Button container styles */
@@ -39,6 +46,12 @@
     font-size: 1rem;
     font-weight: 500;
     text-align: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease; /* Added hover effects */
+  }
+
+  .home-button:hover {
+    transform: translateY(-3px); /* Added slight lift */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2); /* Added hover shadow */
   }
   
   /* Login button styles */
@@ -59,4 +72,8 @@
   
   .register-button:hover {
     background-color: #9ca3af; /* Darker gray on hover */
+  }
+
+  .home-container > * + * {
+    margin-top: 1rem; /* Added vertical rhythm */
   }

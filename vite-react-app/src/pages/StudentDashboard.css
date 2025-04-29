@@ -3,12 +3,17 @@
     padding: 20px;
     background-color: transparent;
     min-height: 80vh;
+    background: linear-gradient(135deg, #f5f7fa, #e4e8f0); /* Added gradient */
+    display: flex;
+    flex-direction: column;
+    align-items: center
   }
   
   .student-dashboard-title {
     font-size: 24px;
     font-weight: bold;
     margin-bottom: 20px;
+    color: #1e40af; /* Added color */
   }
   
   .student-dashboard-program-selector {
@@ -25,6 +30,14 @@
     font-size: 16px;
     max-height: 50px; /* Limit the height of the dropdown */
     overflow-y: hidden; 
+    border: 1px solid #d1d5db; /* Added border */
+    border-radius: 4px; /* Added rounding */
+    transition: border-color 0.2s ease; /* Added transition */
+  }
+
+  .student-dashboard-dropdown:focus {
+    border-color: #1e40af; /* Focus state */
+    outline: none;
   }
   
   .student-dashboard-error {
@@ -44,7 +57,7 @@
   
   .student-dashboard-course-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); /* Responsive cols */
     gap: 20px;
   }
   
@@ -53,7 +66,13 @@
     border: 1px solid #ddd;
     border-radius: 8px;
     padding: 16px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Shadow */
+    transition: transform 0.2s ease, box-shadow 0.2s ease; /* Hover effects */
+  }
+
+  .student-dashboard-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
   }
   
   .student-dashboard-card-list {

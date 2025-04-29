@@ -57,6 +57,7 @@
     text-decoration: none;
     padding: 5px 10px;
     border-radius: 4px;
+    transition: background-color 0.2s ease, color 0.2s ease; /* Added smooth hover transition */
   }
   
   .header-nav-link:hover {

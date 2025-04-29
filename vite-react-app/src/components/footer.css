@@ -56,6 +56,7 @@
   .footer-social-link {
     text-decoration: none;
     color: #6c757d; /* Gray color */
+    transition: color 0.2s ease; /* Added smooth hover transition */
   }
   
   .footer-social-link:hover {

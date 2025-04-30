@@ -18,7 +18,7 @@ import "./App.css";
 function App() {
   const validateToken = async (token: string) => {
     try {
-      const response = await axios.get("http://172.172.215.186:8080/api/auth/validate", {
+      const response = await axios.get("http://74.235.248.40:8080/api/auth/validate", {
         headers: {
           Authorization: `Bearer ${token}`,
         },

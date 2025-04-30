@@ -55,7 +55,7 @@ cd /d "%FRONTEND_DIR%"
 start cmd /k "npm start"
 
 REM Provide the local URL for the frontend
-echo Frontend is running at: http://172.172.215.186:3000/
+echo Frontend is running at: http://74.235.248.40:3000/
 
 REM Exit the script
 exit

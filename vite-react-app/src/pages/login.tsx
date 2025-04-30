@@ -15,7 +15,7 @@ export default function LoginPage() {
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://172.172.215.186:8080/api/auth/login", {
+      const response = await axios.post("http://74.235.248.40:8080/api/auth/login", {
         email: email,
         password: password,
       });

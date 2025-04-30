@@ -24,7 +24,7 @@ export default function StudentFin() {
       }
   
       try {
-        const response = await fetch(`http://172.172.215.186:8080/api/aid/user/${userId}`, {
+        const response = await fetch(`http://74.235.248.40:8080/api/aid/user/${userId}`, {
           method: "GET",
         });
   
@@ -60,7 +60,7 @@ export default function StudentFin() {
     };
 
     try {
-      const response = await fetch("http://172.172.215.186:8080/api/aid", {
+      const response = await fetch("http://74.235.248.40:8080/api/aid", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

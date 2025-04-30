@@ -15,7 +15,7 @@ export default function StaffFin() {
 
   const fetchFinancialAidRequests = async () => {
     try {
-      const response = await fetch("http://172.172.215.186:8080/api/aid/type/Pending", {
+      const response = await fetch("http://74.235.248.40:8080/api/aid/type/Pending", {
         method: "GET",
       });
 
@@ -38,10 +38,10 @@ export default function StaffFin() {
 
   const handleUpdateType = async (id: string, newType: string) => {
     try {
-      console.log(`PUT Request URL: http://172.172.215.186:8080/api/aid/${id}/type`);
+      console.log(`PUT Request URL: http://74.235.248.40:8080/api/aid/${id}/type`);
       console.log("Request Body:", newType);
 
-      const response = await fetch(`http://172.172.215.186:8080/api/aid/${id}/type`, {
+      const response = await fetch(`http://74.235.248.40:8080/api/aid/${id}/type`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
